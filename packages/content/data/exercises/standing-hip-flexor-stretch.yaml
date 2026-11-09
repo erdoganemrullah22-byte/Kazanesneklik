@@ -1,0 +1,51 @@
+# Örnek egzersiz kartı (K0, içerik hattı iskeleti).
+# Klinik olarak gözden geçirilmedi: review = null (plan 5.5, 11.0).
+# targetFeel ve stopIf değerleri plandaki başlangıç değerleridir [Uzman].
+slug: standing-hip-flexor-stretch
+version: 1
+name:
+  tr: Ayakta Kalça Önü Germesi
+  en: Standing Hip Flexor Stretch
+type: static
+regions:
+  primary: HIP_FLEXOR
+  secondary: []
+levels: { min: 1, max: 3 }
+position: standing
+space: standing_only
+perSide: true
+quietOk: true
+requires: [vertical_support]
+optional: []
+contraFlags: []
+modifications: {}
+noEquipmentAlt: null
+targetFeel: { min: 4, max: 6 }
+feelWhere: [HIP_FLEXOR]
+stopIf: [SHARP, POP, JOINT_PINCH, NEURAL_TRANSIENT, NEURAL_PERSISTENT, RADIATING]
+steps:
+  tr:
+    - Bir duvarın ya da sağlam bir sandalyenin yanında dur, bir elinle destek al.
+    - Bir ayağını geriye al; iki ayağın da öne baksın.
+    - Kuyruk sokumunu hafifçe içeri al ve kalçanı öne doğru it.
+    - Hissi kalçanın önünde bul, nefesini tutmadan bekle; sonra tarafları değiştir.
+cues:
+  tr:
+    - Belini çukurlaştırma; his kalçanın önünde olmalı.
+    - Gövden dik kalsın, omuzların gevşek.
+mistakes:
+  tr:
+    - Belden geriye bükülmek
+    - Adımı fazla uzun tutup dengeyi kaybetmek
+progressions:
+  next: [kneeling-hip-flexor-stretch]
+  prev: []
+lateral: []
+media:
+  keyframes: []
+  video: null
+  alt:
+    tr: Ayakta, bir ayak önde bir ayak geride; gövde dik, kalça öne itilmiş, bir el duvarda.
+evidence: moderate
+requiresCoachUnlock: false
+review: null

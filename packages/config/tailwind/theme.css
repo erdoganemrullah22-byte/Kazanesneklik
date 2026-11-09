@@ -1,0 +1,89 @@
+/*
+ * Kazan Esneklik — shared Tailwind CSS v4 design tokens (plan 7.8).
+ * Import after `tailwindcss`: `@import "@kazan/config/tailwind/theme.css";`
+ *
+ * Palette: deep pine green (brand, navigation, progress), warm apricot
+ * (primary action), amber (attention, "pain"), red (emergency content only),
+ * soft green (completion), warm greys (rest days). Every text/background pair
+ * below meets WCAG 2.2 AA (≥4.5:1) in both themes; input borders and focus
+ * rings meet 3:1 for non-text contrast.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: oklch(0.985 0.008 85);
+  --foreground: oklch(0.25 0.025 175);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.025 175);
+  --muted: oklch(0.95 0.01 85);
+  --muted-foreground: oklch(0.47 0.02 90);
+  --primary: oklch(0.43 0.075 175);
+  --primary-foreground: oklch(0.99 0.005 85);
+  --accent: oklch(0.8 0.12 62);
+  --accent-foreground: oklch(0.26 0.05 45);
+  --warning: oklch(0.93 0.06 85);
+  --warning-foreground: oklch(0.32 0.07 70);
+  --danger: oklch(0.53 0.19 27);
+  --success: oklch(0.52 0.11 150);
+  --border: oklch(0.88 0.012 85);
+  --input: oklch(0.64 0.02 85);
+  --ring: oklch(0.55 0.09 175);
+  --nav: oklch(0.97 0.012 175);
+  color-scheme: light;
+}
+
+.dark {
+  --background: oklch(0.2 0.018 180);
+  --foreground: oklch(0.95 0.01 85);
+  --card: oklch(0.24 0.02 180);
+  --card-foreground: oklch(0.95 0.01 85);
+  --muted: oklch(0.28 0.018 180);
+  --muted-foreground: oklch(0.78 0.015 85);
+  --primary: oklch(0.78 0.09 170);
+  --primary-foreground: oklch(0.2 0.03 180);
+  --accent: oklch(0.8 0.12 62);
+  --accent-foreground: oklch(0.24 0.05 45);
+  --warning: oklch(0.32 0.05 75);
+  --warning-foreground: oklch(0.9 0.08 85);
+  --danger: oklch(0.7 0.17 25);
+  --success: oklch(0.75 0.12 150);
+  --border: oklch(0.36 0.02 180);
+  --input: oklch(0.55 0.02 180);
+  --ring: oklch(0.72 0.09 170);
+  --nav: oklch(0.23 0.02 180);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-nav: var(--nav);
+}
+
+@theme {
+  /* Plan 7.8: body text 17–18 px, nothing below 16 px. */
+  --text-xs: 1rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.55;
+}

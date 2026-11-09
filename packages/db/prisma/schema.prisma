@@ -1,0 +1,109 @@
+// Kazan Esneklik — veri modeli (K0).
+//
+// K0 yalnızca Better Auth tablolarını ve boş olmayan basit bir Profile modelini
+// içerir. Plan 10.4'teki diğer modeller (tarama, değerlendirme, program, kayıt,
+// AI …) K1+ aşamalarında migration'larla eklenecek.
+//
+// Kimlikler UUIDv7'dir (plan 10.4): Better Auth `generateId: false` ile
+// kimliği veritabanına bırakır; Prisma `uuid(7)` varsayılanını üretir.
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Better Auth çekirdek tabloları ────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(uuid(7)) @db.Uuid
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  profile       Profile?
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(uuid(7)) @db.Uuid
+  accountId             String
+  providerId            String
+  userId                String    @db.Uuid
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(uuid(7)) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@index([identifier])
+  @@map("verifications")
+}
+
+// Better Auth yerleşik rate limit sayaçları (`rateLimit.storage = "database"`).
+// Sunucusuz ortamda bellek içi sayaç örnekler arasında paylaşılmadığı için
+// veritabanında tutulur.
+model RateLimit {
+  id          String @id @default(uuid(7)) @db.Uuid
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+
+  @@map("rate_limits")
+}
+
+// ── Uygulama ─────────────────────────────────────────────────────────────────
+
+// K0: hesapla birlikte oluşturulan en küçük profil. Deneyim, doğum yılı ve
+// diğer alanlar (plan 10.4) K1'de eklenecek.
+model Profile {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  userId      String   @unique @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("profiles")
+}

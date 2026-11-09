@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+
+# pnpm 10 runs no dependency lifecycle scripts unless they are listed here.
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - prisma
+  - sharp
+  - esbuild
+  - unrs-resolver
+
+# Exact versions on `pnpm add` (pins instead of ^ ranges).
+savePrefix: ''

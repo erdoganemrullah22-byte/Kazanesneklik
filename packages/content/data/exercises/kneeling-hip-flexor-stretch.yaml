@@ -1,0 +1,55 @@
+# Örnek egzersiz kartı (K0, içerik hattı iskeleti) — plan 5.5'teki örnek kart.
+# Klinik olarak gözden geçirilmedi: review = null (plan 5.5, 11.0).
+# targetFeel, contraFlags ve modifications plandaki başlangıç değerleridir [Uzman].
+slug: kneeling-hip-flexor-stretch
+version: 1
+name:
+  tr: Diz Üstü Kalça Önü Germesi
+  en: Kneeling Hip Flexor Stretch
+type: static
+regions:
+  primary: HIP_FLEXOR
+  secondary: [SPINE_EXTENSION]
+levels: { min: 1, max: 3 }
+position: kneeling
+space: floor_mat
+perSide: true
+quietOk: true
+requires: [soft_knee_surface]
+optional: [vertical_support]
+contraFlags: [DIZ_PROTEZ, "YAKIN_CERRAHI:knee"]
+modifications:
+  GEBE:
+    maxFeel: 5
+    cue:
+      tr: Karnını sıkıştırmadan, gövde dik.
+noEquipmentAlt: standing-hip-flexor-stretch
+targetFeel: { min: 4, max: 6 }
+feelWhere: [HIP_FLEXOR]
+stopIf: [SHARP, POP, JOINT_PINCH, NEURAL_TRANSIENT, NEURAL_PERSISTENT, RADIATING]
+steps:
+  tr:
+    - Yere katlanmış bir havlu ya da minder koy, bir dizini üstüne yerleştir.
+    - Diğer ayağını öne al; öndeki dizin ayak bileğinin üstünde dursun.
+    - Kuyruk sokumunu hafifçe içeri al, kalçanı öne it.
+    - Hissi kalçanın önünde bul, rahat nefes alarak bekle; sonra tarafları değiştir.
+cues:
+  tr:
+    - Kuyruk sokumunu hafifçe içeri al, kalçanı öne it.
+    - Belini çukurlaştırma; his kalçanın önünde olmalı.
+mistakes:
+  tr:
+    - Belden geriye bükülmek
+    - Öndeki dizin ayak bileğini çok geçmesi
+progressions:
+  next: []
+  prev: [standing-hip-flexor-stretch]
+lateral: []
+media:
+  keyframes: []
+  video: null
+  alt:
+    tr: Bir diz yerde, diğer ayak önde; gövde dik, kalça öne itilmiş.
+evidence: moderate
+requiresCoachUnlock: false
+review: null

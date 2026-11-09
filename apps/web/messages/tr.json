@@ -1,0 +1,121 @@
+{
+  "app": {
+    "name": "Kazan Esneklik",
+    "shortName": "Kazan",
+    "description": "Düzenli çalışmayla esnekliğini adım adım geliştirmen için kişisel antrenman planı.",
+    "skipToContent": "İçeriğe geç"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistem",
+    "light": "Açık",
+    "dark": "Koyu"
+  },
+  "nav": {
+    "label": "Ana menü",
+    "today": "Bugün",
+    "program": "Program",
+    "progress": "İlerleme",
+    "coach": "Koç",
+    "profile": "Profil",
+    "signOut": "Çıkış yap"
+  },
+  "landing": {
+    "title": "Esnekliğin, düzenli çalışmayla adım adım",
+    "lead": "Kazan Esneklik; seviyene, zamanına ve imkanlarına göre kişisel bir germe ve mobilite programı hazırlar, her seansta sana eşlik eder.",
+    "signIn": "Giriş yap",
+    "signUp": "Hesap oluştur",
+    "phaseTitle": "Şu an kişisel kullanım aşamasındayız",
+    "phaseBody": "Site şimdilik yalnızca davetli hesaplara açık. Programlar, testler ve koç özellikleri aşama aşama ekleniyor.",
+    "safetyTitle": "Güvenlik önce gelir",
+    "safetyBody": "Germe hissi ile ağrı farklıdır. Keskin, batan ya da yayılan bir ağrı hissedersen dur. Bu uygulama tıbbi tanı ya da tedavi sunmaz."
+  },
+  "auth": {
+    "signInTitle": "Giriş yap",
+    "signInLead": "Hesabına e-posta adresin ve parolanla gir.",
+    "signUpTitle": "Hesap oluştur",
+    "signUpLead": "Kayıt şimdilik yalnızca davet edilen e-posta adreslerine açık.",
+    "name": "Adın",
+    "nameHint": "Uygulamada sana bu adla hitap edeceğiz.",
+    "email": "E-posta",
+    "password": "Parola",
+    "passwordHint": "En az 12 karakter. Uzun bir cümle de olur.",
+    "submitSignIn": "Giriş yap",
+    "submitSignUp": "Hesabı oluştur",
+    "pending": "Bekle…",
+    "noAccount": "Hesabın yok mu?",
+    "haveAccount": "Zaten hesabın var mı?",
+    "toSignUp": "Hesap oluştur",
+    "toSignIn": "Giriş yap",
+    "errors": {
+      "notAllowed": "Bu e-posta adresiyle kayıt açık değil.",
+      "invalidCredentials": "E-posta ya da parola hatalı.",
+      "userExists": "Bu e-posta ile zaten bir hesap var. Giriş yapmayı dene.",
+      "passwordTooShort": "Parola en az 12 karakter olmalı.",
+      "rateLimited": "Çok fazla deneme yaptın. Biraz bekleyip tekrar dene.",
+      "generic": "Bir sorun oluştu. Lütfen tekrar dene."
+    }
+  },
+  "comingSoon": {
+    "badge": "Yakında",
+    "intro": "Bu ekran henüz hazır değil. Faz K (kişisel kullanım) aşama aşama ilerliyor; burada neler olacağı ve hangi aşamada geleceği aşağıda.",
+    "stageLabel": "Aşama"
+  },
+  "today": {
+    "title": "Bugün",
+    "greeting": "Merhaba {name}.",
+    "items": {
+      "k1": "Sağlık taraması, imkanların, hedefin ve başlangıç testleri; Esneklik Profili raporun.",
+      "k2": "Bugünün seansı: sana göre seçilmiş egzersizler, süre ve neden bu program.",
+      "k3": "Seans oynatıcı: sesli yönlendirme, “AĞRI VAR” düğmesi, internetsiz çalışma.",
+      "k4": "Haftalık seri, kaçırılan seansı taşıma ve hatırlatıcılar."
+    }
+  },
+  "program": {
+    "title": "Program",
+    "items": {
+      "k2": "Hafta ve ay görünümü, döngü fazları, seansı başka güne taşıma ve “Bu hafta yoğun”.",
+      "k2b": "Her egzersiz için “Neden bu?” açıklaması ve ekipmansız alternatifler."
+    }
+  },
+  "progress": {
+    "title": "İlerleme",
+    "items": {
+      "k1": "Başlangıç ölçümlerin ve bölge bölge seviye profilin.",
+      "k4": "Kontrol testleri, grafikler, kilometre taşları ve hedef süre tahmini (aralık olarak, söz olarak değil)."
+    }
+  },
+  "coach": {
+    "title": "Koç",
+    "items": {
+      "k4": "Haftalık değerlendirme ve ağrı kartı.",
+      "k5": "Yapay zekâ koç: yanıtlarını anlama, programını açıklama, haftalık check-in ve sohbet."
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "account": "Hesap",
+    "displayName": "Görünen ad",
+    "email": "E-posta",
+    "memberSince": "Katılım",
+    "appearance": "Görünüm",
+    "items": {
+      "k1": "Hedeflerin, mekanların ve ekipmanın, haftalık zaman şablonun, sağlık bilgilerin."
+    }
+  },
+  "offline": {
+    "title": "Bağlantın yok",
+    "body": "İnternete bağlanınca kaldığın yerden devam edebilirsin. İnternetsiz seans özelliği K3 aşamasında gelecek.",
+    "retry": "Tekrar dene"
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "body": "Aradığın sayfa taşınmış ya da hiç var olmamış olabilir.",
+    "home": "Ana sayfaya dön"
+  },
+  "error": {
+    "title": "Bir şeyler ters gitti",
+    "body": "Beklenmeyen bir hata oluştu. Tekrar denemek ister misin?",
+    "retry": "Tekrar dene"
+  }
+}

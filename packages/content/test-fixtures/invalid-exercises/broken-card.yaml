@@ -1,0 +1,23 @@
+# Kasıtlı olarak hatalı kart: content:validate bunu yakalamalı (test fixture).
+slug: another-slug
+version: 1
+name: { tr: Hatalı Kart }
+type: static
+regions: { primary: HIPFLEXOR }
+levels: { min: 4, max: 2 }
+position: standing
+space: standing_only
+perSide: true
+quietOk: true
+noEquipmentAlt: missing-card
+targetFeel: { min: 4, max: 6 }
+feelWhere: [HIP_FLEXOR]
+stopIf: [SHARP]
+steps: { tr: [Bir, İki, Üç] }
+cues: { tr: [Bir ipucu, İkinci ipucu] }
+mistakes: { tr: [Bir hata] }
+progressions: { next: [], prev: [] }
+media: { alt: { tr: Açıklama } }
+evidence: moderate
+review: null
+unknownField: true
