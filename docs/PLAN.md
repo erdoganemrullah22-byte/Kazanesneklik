@@ -44,6 +44,7 @@ Vaadin tek adı **"Düzenli Çalışana Söz"**dür. Bu bir **süreç taahhüdü
 | **Birincil metrik** | Dönem başında kilitlenen **tek** ölçüm ve taraf (ör. "Oturarak uzanma, cm" ya da "Diz–duvar, sol, cm"). Önceden kayıt mantığı: sonradan değiştirilemez. |
 | **Başarılı dönem** | Birincil metrikte dönem sonu değeri − başlangıç değeri **≥ MDC95** (o test ve o ölçüm yöntemi için "en küçük saptanabilir değişim"). MDC95 pilotla çıkana kadar geçici eşik olarak taslak MSD değerleri kullanılır, ama bu dönemde kullanıcıya sayılı söz verilmez. |
 | **Söz kapsamındaki metrikler** | Yalnızca kişinin **kendi başına güvenilir okuyabildiği cm testleri**: MVP'de T01 Oturarak uzanma ve T03 Diz–duvar. Bir metrik ancak "beklenen ortalama kazanç ≥ 1,5 × MDC95" koşulunu sağlıyorsa söze alınır. Ölçüm hatasının normal dağıldığı varsayımıyla bu, gerçek kazancı ortalama düzeyde olan bir kullanıcının değişiminin MDC'yi geçme olasılığını yaklaşık %84'e çıkarır. Derece cinsinden metrikler (açı) eğim ölçer protokolü doğrulanana kadar (Faz 4) "izlenir ama söz kapsamı dışında" kalır. |
+| **Söze uygun metriği olmayan kullanıcı** | Odak bölgesinde söz koşulunu sağlayan metrik yoksa (ör. S4+ arka bacak, S3+ ayak bileği, derece metrikleri; 3.4.2) dönem yine kurulur; başarı **beklenen aralık + kilometre taşı + süreç katmanı** (6.1) ile raporlanır, "söz" metni gösterilmez, Derin İnceleme yine ücretsiz açılır. Bu grup iç KPI'da ayrı raporlanır; böylece "düzenli çalışan herkes" için bir başarı tanımı her zaman vardır. |
 
 **Ölçüm standardı (sözün dayandığı her ölçüm için):**
 1. **Başlangıç:** 1. haftada iki ayrı günde ölçülür, ortalaması alınır. Her gün 2–3 deneme yapılır, medyanı kaydedilir.
@@ -57,7 +58,7 @@ Vaadin tek adı **"Düzenli Çalışana Söz"**dür. Bu bir **süreç taahhüdü
 - Uygun kullanıcıların **≥%80'i** başarılı dönem [Kalibre].
 - Her zaman **iki ayrı rapor**: (a) dönem başlatan herkes (bırakan ve yaralanan dahil), (b) protokole uyanlar. Hayatta kalan yanlılığı böylece görünür olur.
 - Pilotta bekleme listesindeki kişilerden 8 hafta arayla iki ölçüm alınır ve **gürültüden doğan sahte başarı oranı** hesaplanır. KPI bu oranın belirgin üstünde olmalıdır.
-- KPI'a her zaman güvenlik metrikleri eşlik eder: 1.000 seans başına olumsuz olay (9.12) ve kötü ağrı bildirimi oranı (hedef: seans başına <%2) [Kalibre].
+- KPI'a her zaman güvenlik metrikleri eşlik eder: 1.000 seans başına olumsuz olay (9.10) ve kötü ağrı bildirimi oranı (hedef: seans başına <%2) [Kalibre].
 - Pilot verisi gelmeden %80 gibi sayılar pazarlamada, açılış sayfasında ya da AI metinlerinde **kullanılmaz**.
 
 ### 0.3 On temel karar
@@ -72,7 +73,7 @@ Vaadin tek adı **"Düzenli Çalışana Söz"**dür. Bu bir **süreç taahhüdü
 | 6 | **Söz yalnızca kişinin kendisinin ölçebildiği cm testleriyle verilir** (MVP: oturarak uzanma, diz–duvar). Resim seçimi yalnızca seviye yerleştirir. Ölçüm güvenirliği pilotla (ICC, SEM, MDC95) doğrulanmadan sayılı söz yok. | Evde, tek başına, havluyla çalışan kullanıcıda derece ölçümü mümkün değil. |
 | 7 | **Yığın:** Next.js (App Router) + TypeScript strict + pnpm monorepo + PostgreSQL + **Prisma** + Better Auth + Serwist/Dexie (PWA). Barındırma Vercel `fra1` + Neon (Frankfurt); sağlayıcılar KVKK standart sözleşmesini imzalamazsa **B planı Türkiye'de barındırma**. | Olgun ekosistem, tip güvenliği, okunabilir şema, hızlı başlangıç. |
 | 8 | **Claude yalnızca sunucuda:** `@anthropic-ai/sdk`, `import "server-only"`, varsayılan model **`claude-opus-5-5`**. `ANTHROPIC_API_KEY` yalnızca `.env.local` ve barındırma ortam değişkeninde durur; sohbete yapıştırılmaz, depoya yazılmaz. Daha ucuz model kullanmak kullanıcının kararıdır (14. bölüm). | Anahtar güvenliği ve kalite. |
-| 9 | **MVP = çekirdek döngü:** 2 hedef parkuru, 6 bölge × S1–S4, ~40 egzersiz, 4 temel test, çevrimdışı oynatıcı, minimum seans, haftalık seri, geri dönüş akışı, Ağrı Politikası ve 3 AI özelliği. İleri seviye (ön split S4–S6), AI koç sohbeti ve ödeme Faz 2'de; koç paneli ve partner germeleri Faz 3'te. | Tek geliştirici ve yarı zamanlı uzmanla gerçekçi kapsam; kritik yol içerik üretimi. |
+| 9 | **MVP = çekirdek döngü:** 2 hedef parkuru, 6 bölge × S1–S4, ~42 egzersiz, 8 testlik MVP bataryası (T01–T09; söz testleri T01 ve T03), çevrimdışı oynatıcı, minimum seans, haftalık seri, geri dönüş akışı, Ağrı Politikası ve 3 AI özelliği. İleri seviye (ön split S4–S6), AI koç sohbeti ve ödeme Faz 2'de; koç paneli ve partner germeleri Faz 3'te. | Tek geliştirici ve yarı zamanlı uzmanla gerçekçi kapsam; kritik yol içerik üretimi. |
 | 10 | **Önce yönetişim, sonra kullanıcı:** Kapalı betadan **önce** klinik güvenlik kurulu (hekim + fizyoterapist) eşikleri ve içerikleri imzalar; KVKK avukatı aydınlatma, rıza ve aktarım düzenini onaylar; kullanım amacı için düzenleyici görüş alınır. | Gerçek sağlık verisi ilk beta kullanıcısıyla birlikte işlenmeye başlar. |
 
 ---
@@ -121,7 +122,7 @@ flowchart TD
   A["Açılış sayfası"] --> B["Aydınlatma metni: okudum onayı (tek zorunlu adım)"]
   B --> C["Hedef seçimi (nötr kartlar, sağlık ifadesi yok)"]
   C --> D["Yaş: 18+ değilse bilgi sayfası, hesap yok"]
-  D --> E["Sağlık taraması: 6-7 kök soru, dallanmalı, yalnızca cihazda"]
+  D --> E["Sağlık taraması: 10 kök soru (K1-K10), dallanmalı, yalnızca cihazda"]
   E -->|"Kırmızı"| R1["Program yok: hafif nefes ve mobilite içeriği + hekime başvuru yönlendirmesi"]
   E -->|"Yeşil / Sarı / Mavi"| F["Elinde ne var? Bugün kaç dakikan var? Ayakta mı, yerde mi?"]
   F --> G["İlk seans: ısınmaya gömülü 2 yerleştirme testi"]
@@ -134,7 +135,7 @@ flowchart TD
   K --> L["Döngü 1 (4 hafta): seanslar, minimum seans, haftalık seri"]
   L --> M["4. hafta kontrol noktası: yön göstergesi, hüküm yok"]
   M --> N["Döngü 2"]
-  N --> O{"8. hafta: dönem değerlendirmesi"}
+  N --> O{"Dönem sonu: 8. hafta (S4+ için 12.)"}
   O -->|"Başarılı"| P["Kutlama + '8 hafta önceki sen' + yeni dönem ya da bakım"]
   O -->|"Uygun ama başarısız"| Q["Derin İnceleme (ücretsiz): ölçüm tekrarı, doz, yöntem değişimi, profesyonel önerisi"]
   O -->|"Uygun değil"| S["Dürüst özet + plan küçültme ya da büyütme önerisi"]
@@ -169,10 +170,10 @@ Kullanıcının seviyesi tek bir sayı değildir. Profil beş bileşenden oluşu
 
 | Bileşen | Ne ölçer? | Değerler | Nereden gelir? |
 |---|---|---|---|
-| **Bölge seviyesi** | Bir bölgedeki hareket aralığı | S1–S6 (13 bölge) | Test bataryası (3.4) |
+| **Bölge seviyesi** | Bir bölgedeki hareket aralığı | S1–S6 (13 bölge) | Test bataryası (3.3) |
 | **Deneyim** | Esneklik çalışma geçmişi; hangi yöntemlerin açılacağını belirler | Yeni · Düzenli · Deneyimli | Onboarding sorusu |
 | **Aktif kontrol oranı (AKO)** | Aralığın ne kadarını kendi kas gücüyle kontrol ettiği | % (aktif aralık ÷ pasif aralık × 100) | Faz 2'de ön split ve hipermobil parkurlarında; MVP'de ileri ve hipermobil kullanıcılar için T02 (aktif) verisi T01 ile birlikte toplanır |
-| **Güven skoru** | Ölçümün ne kadar güvenilir olduğu | 0–1 | Ölçüm yöntemi (3.3) |
+| **Güven skoru** | Ölçümün ne kadar güvenilir olduğu | 0–1 | Ölçüm yöntemi ve ölçen kişi (3.1.5) |
 | **Sağlık profili** | Kısıtlar ve önlemler | Risk kategorisi + ConditionCode listesi | Sağlık taraması (3.2, 9.3) |
 
 #### 3.1.1 Bölge taksonomisi (13 bölge, kanonik)
@@ -210,7 +211,8 @@ Kanonik bölge listesi mimari taslağın 13 değerli enum'udur. Ürünün 8 ekse
 
 | Yöntem | Bölge seviyesi | Deneyim | Ek koşul |
 |---|---|---|---|
-| Statik, dinamik, aktif | S1+ | Hepsi | — |
+| Statik, dinamik, aktif temel hareket | S1+ | Hepsi | — |
+| Aktif esneklik / uç aralıkta izometrik | S2+ | Hepsi | — |
 | PNF (kasıl-gevşe, kişinin kendisi) | S3+ | Düzenli+ | GEBE, HIPERTANSIYON'da efor ≤%30 ve nefes verilerek; GEBE'de ilk kez öğrenilmez |
 | Yüklü germe | S4+ | Deneyimli | OSTEO, BEL_DISK, BEL_SPONDIL, GEBE'de yok |
 | Partnerle pasif germe | S3+ | Düzenli+ | Faz 3; 4.4'teki kurallar |
@@ -423,7 +425,7 @@ Split ve köprü kilometre taşları vücut oranı (%bacak boyu) yerine **mutlak
 | Ölçüm | Ne zaman? | Protokol | Amaç |
 |---|---|---|---|
 | **Başlangıç ölçümü** | 1. haftada iki ayrı gün | 0.2'deki standart; birincil metrik kilitlenir | Söz başlangıcı |
-| **Kontrol testi** | Her döngünün son haftası (4, 12, …) | Seansın başında, germe öncesi, normal hacim | Seviye güncelleme; **yön göstergesi (↗/→), hüküm yok** |
+| **Kontrol testi** | Dönem sonuna denk gelmeyen her döngünün son haftası (S1–S3: 4, 12, 20…; S4–S6: 4, 8, 16…) | Seansın başında, germe öncesi, normal hacim | Seviye güncelleme; **yön göstergesi (↗/→), hüküm yok** |
 | **Dönem değerlendirmesi** | 8. hafta (S4+ için 12.) | İki ayrı gün, standart protokol | Söz kararı |
 | **SPOT** | Güven <0,7 ise 2 hafta sonra | Tek test | Seviye güvenini artırmak |
 | **Bakım testi** | Bakım modunda 8 haftada bir | Standart | Düşüş MDC'yi aşarsa 4 haftalık mini döngü |
@@ -492,7 +494,7 @@ Not: Tablo, kuralın sonucunu da gösterir. Örneğin S3 ayak bileği kullanıc�
 
 ### 4.2 Yetenek (capability) modeli
 
-Egzersizler eşya değil **yetenek** ister. Kullanıcının yetenek kümesi = seçili mekanın eşyaları + her zaman var sayılanlar (zemin, duvar) + ev ikameleri (onboarding'de "evinde havlu ve sağlam bir sandalye var mı?") + imkan alanları (partner, alan). Motor yalnızca `requires ⊆ yetenekler` olan egzersizleri seçer; tercih sırası: aynı bölge ve seviyede orijinal → yan seçenek (lateral) → bir seviye aşağıdaki ilerleme. Kapsama kuralı (10.7) sayesinde her bölge × seviye hücresinde en az 2 **ekipmansız** (yalnızca zemin + duvar) seçenek bulunur; motor hiçbir zaman "egzersiz bulunamadı" demez.
+Egzersizler eşya değil **yetenek** ister. Kullanıcının yetenek kümesi = seçili mekanın eşyaları + her zaman var sayılanlar (zemin, duvar) + ev ikameleri (onboarding'de "evinde havlu ve sağlam bir sandalye var mı?") + imkan alanları (partner, alan). Motor yalnızca `requires ⊆ yetenekler` olan egzersizleri seçer; tercih sırası: aynı bölge ve seviyede orijinal → yan seçenek (lateral) → bir seviye aşağıdaki ilerleme. Kapsama kuralı (10.7) sayesinde her bölge × seviye hücresinde (MVP: 6 bölge × S1–S4) en az 2 **temel setle** (zemin, duvar, havlu) yapılabilen seçenek bulunur; motor hiçbir zaman "egzersiz bulunamadı" demez.
 
 | Yetenek | Karşılayan eşyalar | Not |
 |---|---|---|
@@ -617,6 +619,8 @@ Henüz sahip olunmayan her eşya için "kaç ek egzersizin ve hangi hedef bölge
 
 MVP'de split, köprü ve pancake hedefleri onboarding'de görünür ama dürüstçe işaretlenir: "Yakında. Bekleme listesine katıl; o zamana kadar split'in temelini kuran genel programla başla."
 
+**MVP'de S5–S6 ölçülen bölge:** Seviye doğru kaydedilir ve raporda gösterilir (kullanıcı "aşağı" yerleştirilmez). Motor o bölgede seviye aralığı kullanıcının seviyesini kapsayan egzersizleri (5.6'da S5'e uzananlar), yoksa S4 hücresini kullanır; doz ve tavanlar `engine-params`'taki gerçek seviyeden gelir. Bu bölge odak seçiminde öncelik almaz ("koru ve kontrol et": aktif uç aralık ve tam aralıkta kuvvet ağırlıklı), haftalık süre zayıf bölgelere aktarılır ve ileri parkurlar için bekleme listesi önerilir. Böylece MVP'de de her seviyedeki kullanıcıya güvenli ve anlamlı bir program çıkar.
+
 ### 5.2 Yöntemler ve dozaj
 
 Tüm sayısal doz değerleri, tavanlar ve kapılar **yalnızca** `packages/content/data/engine-params.yaml` içinde tanımlanır. Doğrulayıcı, AI aracı ve oynatıcı bu dosyayı okur; AI promptlarında sayısal doz yazılmaz. Tanımlı olmayan bir seviyede ya da kombinasyonda doğrulayıcı reddeder (fail-closed).
@@ -628,7 +632,7 @@ Tüm sayısal doz değerleri, tavanlar ve kapılar **yalnızca** `packages/conte
 | Statik germe | Hareket aralığı | S1+ | Seviye tablosu (5.2.2) | Düzenli statik germenin hareket aralığını artırdığı [Güçlü]; 15–60 sn tutuş ve haftalık toplam süre ile ilişki [Orta] |
 | Dinamik (kontrollü, yaylanmasız) | Isınma, hareket hazırlığı | S1+ | 6–10 tekrar × 1–2 | Isınmanın konforu artırdığı [Zayıf/Uzman]; patlayıcı aktivite öncesi uzun statik germe yerine tercih [Orta] |
 | Aktif esneklik / uç aralıkta izometrik | Aralığı kontrol etmek | S2+ | 3–5 tekrar × 5–10 sn | [Zayıf–Orta] |
-| PNF (kasıl-gevşe, kişinin kendisi) | Aralık | S3+, Düzenli+ | Kasılma 5–6 sn (S3 efor ≤%30, S4+ ≤%50; 65+ ≤%40; tansiyonda nefes verilerek) → gevşe 2–3 sn → derinleş 15–20 sn; 3–4 döngü; seansta bölge başına 1 egzersiz; aynı bölgede ≥48 sa ara | Statikle benzer ya da biraz üstün [Orta] |
+| PNF (kasıl-gevşe, kişinin kendisi) | Aralık | S3+, Düzenli+ | Kasılma 5–6 sn (S3 efor ≤%30, S4+ ≤%50; 65+ ≤%40; `HIPERTANSIYON` ve `GEBE`'de ≤%30 ve nefes verilerek; birden çok kural varsa en düşüğü) → gevşe 2–3 sn → derinleş 15–20 sn; 3–4 döngü; seansta bölge başına 1 egzersiz; aynı bölgede ≥48 sa ara | Statikle benzer ya da biraz üstün [Orta] |
 | Tam aralıkta kuvvet (vücut ağırlığıyla RDL, derin split squat vb.) | Aralık + kontrol | S2+ | 2–3 × 8–12 | Esnekliği germeye yakın ölçüde artırabildiği [Orta] |
 | Yüklü germe | Uç aralıkta kuvvet | S4+, Deneyimli | 2–3 × 6–8 yavaş tekrar ya da 20–30 sn tutuş; ev yükü ≤10 kg, 1 kg adım | [Zayıf–Orta] |
 | Nefes ve rahatlama | Soğuma, konfor | Herkes | 1–2 dk | [Uzman] |
@@ -835,7 +839,7 @@ Kapsama kuralı: 6 MVP bölgesinin her biri × S1–S4 hücresinde **en az 2 egz
 | 12 | Sırtüstü arka bacak kasıl-gevşe (havluyla) | HAMSTRING | PNF | S3–S5 | `extend_reach` | `HIPERTANSIYON`, `GEBE`: nefes verilerek, efor ≤%30 |
 | 13 | Oturarak aktif bacak kaldırma | HAMSTRING | Aktif | S3–S6 | — | — |
 | 14 | Tek bacak RDL (vücut ağırlığı, duvar desteği) | HAMSTRING | Tam aralıkta kuvvet | S2–S5 | `vertical_support` | `DUSME_RISKI`: iki elle destek |
-| 15 | Ayakta kalça önü germesi (split duruş) | HIP_FLEXOR | Statik | S1–S2 | `vertical_support` | — |
+| 15 | Ayakta kalça önü germesi (split duruş) | HIP_FLEXOR | Statik | S1–S3 | `vertical_support` | — |
 | 16 | Diz üstü kalça önü germesi | HIP_FLEXOR | Statik | S1–S3 | `soft_knee_surface` | `DIZ_PROTEZ` → #15 |
 | 17 | Diz üstü kalça önü + kol uzanma | HIP_FLEXOR | Statik/dinamik | S2–S4 | `soft_knee_surface` | `DIZ_PROTEZ` → #15 |
 | 18 | Alçak hamle akışı (Low Lunge) | HIP_FLEXOR | Dinamik | S1–S4 | `soft_knee_surface` | `DIZ_PROTEZ` → ayakta hamle |
@@ -843,7 +847,7 @@ Kapsama kuralı: 6 MVP bölgesinin her biri × S1–S4 hücresinde **en az 2 egz
 | 20 | Diz üstü kalça önü kasıl-gevşe | HIP_FLEXOR | PNF | S3–S5 | `soft_knee_surface` | `DIZ_PROTEZ` |
 | 21 | Duvarda kanepe germesi (Couch Stretch) | HIP_FLEXOR | Statik | S4–S6 | `vertical_support`, `soft_knee_surface` | `DIZ_PROTEZ`, `BEL_SPONDIL` → yok |
 | 22 | Sırtüstü figür-4 germesi | HIP_EXTERNAL_ROTATION | Statik | S1–S3 | — | `KALCA_PROTEZ_ARKA` → yok |
-| 23 | Sandalyede figür-4 | HIP_EXTERNAL_ROTATION | Statik | S1–S2 | `seat` | `KALCA_PROTEZ_ARKA` → yok |
+| 23 | Sandalyede figür-4 | HIP_EXTERNAL_ROTATION | Statik | S1–S3 | `seat` | `KALCA_PROTEZ_ARKA` → yok |
 | 24 | Yan yatışta istiridye (Clamshell) | HIP_EXTERNAL_ROTATION (aktif) | Aktif | S1–S3 | — | — |
 | 25 | 90/90 geçişleri (elle destekli) | HIP_ER / HIP_IR | Dinamik | S2–S5 | — | `KALCA_PROTEZ_*`, `DIZ_PROTEZ` → yok |
 | 26 | 90/90 öne eğilme | HIP_EXTERNAL_ROTATION | Statik | S3–S5 | — | `KALCA_PROTEZ_*` → yok |
@@ -1418,9 +1422,10 @@ messages[1..n]     sohbet geçmişi (append-only)                    ◄── B
 ```
 <profil_ozeti surum="4">
 takma_id: u_7f3a…   yaş_grubu: 60-64   hitap: siz
-seviyeler: HAMSTRING=S1 HIP_FLEXOR=S2 HIP_ER=S1 SHOULDER_FLEXION=S2 ANKLE=S2
+seviyeler: HAMSTRING=S1 HIP_FLEXOR=S2 HIP_EXTERNAL_ROTATION=S1 THORACIC_ROTATION=S2
+           SHOULDER_FLEXION=S2 ANKLE_DORSIFLEXION=S2      (yalnızca kanonik enum adları)
 hedef: genel_mobilite   deneyim: yeni   kişisel_germe_tavanı: 5
-kodlar: DIZ_PROTEZ, YAS_65        bölge_kilitleri: yok
+kodlar: DIZ_PROTEZ                bölge_kilitleri: yok
 yetenekler: extend_reach, seat, vertical_support   zaman: Pzt/Çar/Cum × 15 dk   mekan: ev
 destek: koç=harici partner=bazen
 uyum_4h: %82   program: Dönem 1 / Döngü 2 / Hafta 3
@@ -1496,10 +1501,10 @@ suçlama yok; yanıtı tek uygulanabilir adımla bitir; kullanıcıya ID göster
 | Durum | Tespit | Sistem davranışı | Kullanıcıya |
 |---|---|---|---|
 | 429 rate limit | `Anthropic.RateLimitError` | SDK `retry-after`'a uyar; arka plan işleri kuyruğa döner; global eşzamanlılık daraltılır | "Koçun şu an yoğun, birkaç saniye içinde tekrar deniyorum…" + 1 otomatik deneme, sonra "Tekrar dene" |
-| 529 aşırı yük / 5xx | `APIError` (status 529) / `InternalServerError` | Retry + devre kesici sayacı | Aynı |
+| 529 aşırı yük / 5xx | `InternalServerError` (≥500; 529'da `error.type === "overloaded_error"`) | Retry + devre kesici sayacı | Aynı |
 | Ağ / zaman aşımı | `APIConnectionError` (`APIError`'dan **önce** yakalanır) | 1 retry; arka planda kuyruk | "Bağlantı koptu, mesajın kaydedildi; tekrar deniyorum." |
 | 400 hatalı istek | `BadRequestError` | **Retry yok**; kod hatası (geçmiş düzenleme, yasak parametre); P2 alarm; şablon | Genel nazik mesaj |
-| 401 / 403 / faturalama | `AuthenticationError` / `PermissionDeniedError` / `billing_error` | Retry yok; **global kill-switch** otomatik; P1 alarm | AI'sız moda geçilir |
+| 401 / 403 / 402 faturalama | `AuthenticationError` / `PermissionDeniedError` / `error.type === "billing_error"` | Retry yok; **global kill-switch** otomatik; P1 alarm | AI'sız moda geçilir |
 | `stop_reason: "refusal"` | Yanıt alanı (`content` okunmadan önce kontrol) | Senkron çağrılarda sunucu tarafı yedek model açık; final yine ret ise şablon | Sohbette: "Bu soruya burada yardımcı olamıyorum; esneklik çalışmanla ilgili şunu yapabiliriz…" |
 | `stop_reason: "max_tokens"` | Yanıt alanı | Yapılandırılmış rollerde `max_tokens` ×1,5 ile 1 deneme; sohbette kısmi yanıt + "Devam et"; yarım araç girdisi çalıştırılmaz | — |
 | Şema / domain geçersiz | Doğrulayıcı | L4 | Görünmez |
@@ -1644,11 +1649,13 @@ Taslaklar belirli API davranışlarına dayanıyor; bunlar kurulu SDK sürümü 
 | Varsayılan model | `claude-opus-5-5` (1M bağlam, 128K çıktı) |
 | Effort | Varsayılan `medium`; **her çağrıda açıkça yazılır** (`output_config.effort`); thinking kapatılamaz |
 | Araç seçimi | Zorunlu `tool_choice` (`any`/`tool`) 400 döner → `auto` + `strict: true` + prompt yönlendirmesi |
-| Prefill | Desteklenmez → `output_config.format` |
+| Prefill | Desteklenmez (son assistant turu ile ön doldurma 400 döner) → `output_config.format` |
+| Örnekleme parametreleri | `temperature`, `top_p`, `top_k` **gönderilmez** (Opus 5.5'te 400); çıktı çeşitliliği prompt ve şablon varyasyonlarıyla, tutarlılık şema ve doğrulayıcıyla sağlanır |
+| Yapılandırılmış çıktı | `output_config: { format: … }` (eski `output_format` kullanılmaz); TS'de `client.messages.parse()` + `zodOutputFormat(şema)` ile, `parsed_output` null ise L4 onarım/şablon |
 | Thinking görünürlüğü | Varsayılan `omitted` (boş metin); arayüzde "Koç düşünüyor…" göstergesi |
 | Preserved thinking | Append-only geçmiş; thinking blokları değiştirilmeden geri; sohbet ortasında model değişmez |
 | Ret | `stop_reason` önce kontrol edilir; `stop_details` yalnızca ret durumunda doludur |
-| Sunucu tarafı yedek model | `betas: ["server-side-fallback-2026-07-01"]` + `fallbacks: "default"`; Haiku 5.5'te yok; Batch'te desteği doğrulanacak (desteklenmiyorsa ret alanlar senkron yoldan) |
+| Sunucu tarafı yedek model | `betas: ["server-side-fallback-2026-07-01"]` + `fallbacks: "default"`; Haiku 5.5'te yok; **Batches API'de reddedilir** → batch isteklerinde gönderilmez, ret alan batch sonuçları senkron yoldan (yedek model açık) tekrar denenir; yedek modele düşen yanıtta `AIUsage.servedModel` ve `fallbackUsed` kaydedilir |
 | Sohbet ortası sistem mesajı | `role: "system"` mesajı, beta gerekmez, yerleşim kurallarıyla |
 | Mesaj başına effort | Beta `mid-conversation-output-config-2026-07-01`; riskli turdan sonraki turda `medium`'a geri alan ikinci mesaj zorunlu (Faz 2) |
 | Önbellek | En fazla 4 breakpoint; asgari önek modele bağlı → `count_tokens` ile doğrula |
@@ -1687,7 +1694,7 @@ Lansmandan önce TİTCK ya da bir düzenleyici danışmandan yazılı görüş a
 - **Klinik güvenlik kurulu:** sorumlu hekim (spor hekimi ya da fiziksel tıp ve rehabilitasyon uzmanı) + fizyoterapist; danışman olarak esneklik antrenörü.
 - **Kurulun sürüm bazında imzaladıkları:** `safety-spec` (Ağrı Politikası, ConditionCode sözlüğü, kırmızı bayrak listesi), `engine-params` (doz, tavan, kapı), test eşikleri ve K tablosu, tarama metinleri, egzersiz kartları (`review` alanı), güvenlik şablon metinleri, eval etiketleri (hekim).
 - **Değişiklik kontrolü:** `packages/safety/**` ve `packages/content/**` için CODEOWNERS zorunlu onaycıdır; güvenlik spesifikasyonu değişikliği yeni `safetySpec` sürümü demektir ve kurul onayı olmadan prod'a çıkmaz.
-- **Zaman bütçesi (kaba):** Faz 0–1'de fizyoterapist haftada ~8–10 saat, hekim haftada ~2–4 saat; sonrasında aylık olumsuz olay incelemesi.
+- **Zaman bütçesi (kaba):** Faz 0–1'de fizyoterapist haftada ~12–15 saat (11.1), hekim haftada ~2–4 saat; sonrasında aylık olumsuz olay incelemesi.
 - **Sigorta:** Mesleki ve ürün sorumluluk sigortası lansmandan önce.
 
 ### 9.3 ConditionCode sözlüğü (kanonik, fail-closed)
@@ -1714,7 +1721,7 @@ Tek bir enum `packages/safety/condition-codes.yaml` içinde tanımlanır. Tarama
 | (yaklaşım bilinmiyor) | — | **İki yaklaşımın kısıtları birlikte** | — | — | — |
 | `DIZ_PROTEZ` | Diz protezi ya da menisküs sorunu | Derin diz bükme (diz üstü oturuş, kurbağa, derin çömelme), diz üstü pozisyonlar | Diz altı destek, ayakta/sandalyede varyant | Kalıcı | [Uzman] |
 | `GLOKOM` | Glokom, retina hastalığı, son 6 ayda göz ameliyatı | Başın kalpten aşağıda kaldığı uzun pozisyonlar | Kısa ya da oturarak varyantlar | Kalıcı | [Uzman] |
-| `HIPERTANSIYON` | Kontrol altındaki yüksek tansiyon | Nefes tutma, ıkınma; baş aşağı pozisyon >30 sn | PNF'de nefes verilerek, izometrik efor ≤%50; yavaş kalkış | Yılda bir | [Orta] |
+| `HIPERTANSIYON` | Kontrol altındaki yüksek tansiyon | Nefes tutma, ıkınma; baş aşağı pozisyon >30 sn | PNF'de nefes verilerek, izometrik efor ≤%30 (3.1.2, 5.2.1); yavaş kalkış | Yılda bir | [Orta] |
 | `NOROPATI` | Diyabet ve ayakta his kaybı | Yoğun ayak/ayak bileği germesi | Tavan 5 (ağrı uyarısı zayıflar); ayak/cilt kontrolü hatırlatması | Kalıcı | [Uzman] |
 | `NEURAL_FLAG` | Kola/bacağa yayılan ağrı, uyuşma, karıncalanma (son 3 ay) | Sinir germe uç pozisyonları (tam düz bacak kaldırmada ayak bileği bükülü, slump benzeri) | Diz hafif bükük, ayak bileği nötr; hekim önerisi | 3 ayda bir yeniden sorulur | [Uzman] |
 | `ANTIKOAG` | Kan sulandırıcı kullanımı | Masaj topu ve rollerla yoğun baskı | Partner kuvveti yok (Faz 3'te kapalı); morarma takibi | Kalıcı | [Uzman] |
@@ -2031,7 +2038,7 @@ B planı: aynı uygulama Türkiye'de VPS + Docker/Coolify + Postgres üzerinde (
 | Grup | Varlıklar (v0.2) |
 |---|---|
 | Kimlik | `User`, `UserKey` (kullanıcı başı şifreleme anahtarı, KEK ile sarılı), Better Auth tabloları |
-| Profil ve imkanlar | `Profile` (deneyim, doğum yılı), `UserLocation` (Ev/Salon/Ofis/Seyahat) + `UserLocationEquipment`, `UserResources` (partner, koç durumu, alan, zemin, `quietMode`, `mobilityLimits`, `dislikedPositions`, `willingToBuy`), `Availability` (`minutesByDay`, tercih saati, zor gün dakikası), `Goal` (birincil hedef, hedef tarih), `ImplementationIntention` (çapa, cümle, engel planı), `ContextMode` (hastalık, seyahat, ağrı, Ramazan, bayram; başlangıç-bitiş), `CoachConstraint` (harici koç kısıtı: bölge, kaçınılacak hareket, doz tavanı) |
+| Profil ve imkanlar | `Profile` (deneyim, doğum yılı), `UserLocation` (Ev/Salon/Ofis/Seyahat) + `UserLocationEquipment`, `UserResources` (partner, koç durumu, alan, zemin, `quietMode`, `coldHome`, `mobilityLimits`, `dislikedPositions`, `willingToBuy`, `regularClasses` (gün + tür), `sportDays`, `deskJob` + `workHours`), `Availability` (`minutesByDay`, tercih saati, zor gün dakikası), `Goal` (birincil hedef, hedef tarih), `ImplementationIntention` (çapa, cümle, engel planı), `ContextMode` (hastalık, seyahat, ağrı, Ramazan, bayram; başlangıç-bitiş), `CoachConstraint` (harici koç kısıtı: bölge, kaçınılacak hareket, doz tavanı) |
 | Sağlık ve güvenlik | `HealthScreening` (sürüm, şifreli cevaplar, `riskTier`), `HealthCondition` (kod, başlangıç, bitiş, taraf, bölge, cerrahi yaklaşım, tahmini doğum tarihi), `Clearance` (kod/bölge, profesyonel türü, tarih, kapsam, kısıtlar, etkinleşme zamanı, yenileme tarihi), `RegionLock` (bölge, neden, bitiş, kaynak), `PainReport` + `PainFollowUp`, `AdverseEvent` |
 | Değerlendirme | `Assessment` (tür: INITIAL/BASELINE_DAY/CONTROL/PERIOD_END/SPOT; koşullar: yerel saat, ısınma protokolü, o gün önceden germe, ölçen, ölçüm aracı), `AssessmentResult` (test, taraf, değer, birim, kademe, denemeler, medyan, yöntem, güven), `RegionLevel` (tarihçeli, 1–6) |
 | Söz | `PromisePeriod` (dönem, birincil metrik + taraf kilidi, başlangıç değeri, MDC sürümü, uygunluk durumu, sonuç) |
@@ -2475,7 +2482,7 @@ Renovate, `pnpm audit` (yüksek/kritik bulgu build'i kırar), CodeQL. Uygulama D
 | Eval etiketleri (güvenlik seti, hekim) | — | ~15 |
 | **Toplam** | | **~175 saat** |
 
-Haftada 10 uzman saatiyle bu iş ~17–18 hafta sürer; 12–15 saatle ~12–14 hafta. Bu yüzden içerik üretimi **Faz 0'ın ilk haftasında** başlar ve geliştirmeyle paralel yürür.
+Haftada 10 uzman saatiyle bu iş ~17–18 hafta sürer; 12–15 saatle ~12–15 hafta. Bu yüzden içerik üretimi **Faz 0'ın ilk haftasında** başlar ve geliştirmeyle paralel yürür.
 
 ### 11.2 Fazlar
 
