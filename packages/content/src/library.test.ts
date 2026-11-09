@@ -14,10 +14,7 @@ describe("exercise library (data/exercises)", () => {
   it("contains the two sample cards and they are all valid", async () => {
     const { exercises, issues } = await loadExerciseLibrary();
     expect(issues).toEqual([]);
-    expect(exercises.map((e) => e.slug).sort()).toEqual([
-      "kneeling-hip-flexor-stretch",
-      "standing-hip-flexor-stretch",
-    ]);
+    expect(exercises.map((e) => e.slug).sort()).toEqual(["kneeling-hip-flexor-stretch", "standing-hip-flexor-stretch"]);
   });
 
   it("marks every sample card as clinically unreviewed (Faz K)", async () => {

@@ -2,14 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 
 /** Coarse, secret-free error codes that may leave the server. */
 export type AiErrorCode =
-  | "AUTH"
-  | "PERMISSION"
-  | "BAD_REQUEST"
-  | "RATE_LIMITED"
-  | "TIMEOUT"
-  | "CONNECTION"
-  | "UPSTREAM"
-  | "API_ERROR";
+  "AUTH" | "PERMISSION" | "BAD_REQUEST" | "RATE_LIMITED" | "TIMEOUT" | "CONNECTION" | "UPSTREAM" | "API_ERROR";
 
 /**
  * Maps SDK errors to codes using the SDK's typed error classes, most specific

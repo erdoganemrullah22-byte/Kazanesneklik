@@ -8,6 +8,7 @@ import { nextCookies } from "better-auth/next-js";
 
 import { isEmailAllowed } from "@/lib/allowlist";
 import { env } from "@/lib/env";
+import { type SignUpRejection, signUpRejection } from "@/lib/signup-policy";
 
 import { prisma } from "./db";
 import { ensureProfileForUser } from "./queries/profile";
@@ -16,7 +17,11 @@ import { findUserEmailById } from "./queries/users";
 /** Error code returned when an e-mail is not on `AUTH_ALLOWED_EMAILS`. */
 export const EMAIL_NOT_ALLOWED = "EMAIL_NOT_ALLOWED";
 
+/** Error code returned while the sign-up window is closed (`AUTH_SIGNUP_OPEN`). */
+export const SIGNUP_CLOSED = "SIGNUP_CLOSED";
+
 const allowlist = new Set(env.AUTH_ALLOWED_EMAILS);
+const signUpPolicy = { open: env.AUTH_SIGNUP_OPEN, allowlist };
 
 function notAllowedError() {
   return new APIError("FORBIDDEN", {
@@ -25,12 +30,22 @@ function notAllowedError() {
   });
 }
 
+function signUpError(rejection: SignUpRejection) {
+  if (rejection === "EMAIL_NOT_ALLOWED") return notAllowedError();
+  return new APIError("FORBIDDEN", { code: SIGNUP_CLOSED, message: "Kayıt şu anda kapalı." });
+}
+
 /**
  * Better Auth (plan 10.2, Faz K 11.0): e-mail + password, sign-up and sign-in
- * only for allowlisted e-mails, enforced server-side in three places:
- *  1. `hooks.before` rejects /sign-up/email and /sign-in/email early,
- *  2. `databaseHooks.user.create.before` blocks any user creation path,
- *  3. `databaseHooks.session.create.before` blocks sessions for users whose
+ * only for allowlisted e-mails (`AUTH_ALLOWED_EMAILS`; env validation caps the
+ * list at one address in Faz K). The allowlist compares text only and there is
+ * no e-mail verification, so sign-up is additionally closed unless
+ * `AUTH_SIGNUP_OPEN=true` (the owner opens it briefly for the first
+ * registration). Enforced server-side in four places:
+ *  1. `emailAndPassword.disableSignUp` while the window is closed,
+ *  2. `hooks.before` rejects /sign-up/email and /sign-in/email early,
+ *  3. `databaseHooks.user.create.before` blocks any user creation path,
+ *  4. `databaseHooks.session.create.before` blocks sessions for users whose
  *     e-mail was removed from the list (and `requireUser()` re-checks on every
  *     protected request).
  */
@@ -46,6 +61,7 @@ export const auth = betterAuth({
     maxPasswordLength: PASSWORD_MAX_LENGTH,
     autoSignIn: true,
     requireEmailVerification: false,
+    disableSignUp: !env.AUTH_SIGNUP_OPEN,
   },
   session: {
     // Plan 10.13: database session, 30-day sliding expiry.
@@ -69,8 +85,12 @@ export const auth = betterAuth({
     before: createAuthMiddleware(async (ctx) => {
       if (ctx.path !== "/sign-up/email" && ctx.path !== "/sign-in/email") return;
       const email: unknown = (ctx.body as { email?: unknown } | undefined)?.email;
+      if (ctx.path === "/sign-up/email") {
+        const rejection = signUpRejection(email, signUpPolicy);
+        if (rejection) throw signUpError(rejection);
+        return;
+      }
       if (isEmailAllowed(email, allowlist)) return;
-      if (ctx.path === "/sign-up/email") throw notAllowedError();
       // Sign-in: answer exactly like a wrong password to reveal nothing.
       throw new APIError("UNAUTHORIZED", {
         code: "INVALID_EMAIL_OR_PASSWORD",
@@ -82,7 +102,8 @@ export const auth = betterAuth({
     user: {
       create: {
         before: async (user) => {
-          if (!isEmailAllowed(user.email, allowlist)) throw notAllowedError();
+          const rejection = signUpRejection(user.email, signUpPolicy);
+          if (rejection) throw signUpError(rejection);
           return { data: user };
         },
         after: async (user) => {

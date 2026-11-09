@@ -1,11 +1,38 @@
+# Dependencies
 node_modules/
-.local/
+
+# Next.js / build output
 .next/
+out/
+dist/
+*.tsbuildinfo
+apps/web/next-env.d.ts
+
+# Generated at build time
+apps/web/public/sw.js
+apps/web/public/sw.js.map
+apps/web/public/swe-worker-*.js
+packages/db/src/generated/
+
+# Secrets — never commit real values (plan 10.14). Only .env.example is tracked.
 .env
+.env.*
+!.env.example
 .env*.local
+
+# Tests
 coverage/
 playwright-report/
 test-results/
-*.tsbuildinfo
-.turbo/
-.vercel/
+blob-report/
+playwright/.cache/
+
+# Local PostgreSQL data (scripts/db-local.sh)
+.local/
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+.idea/

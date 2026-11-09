@@ -9,11 +9,7 @@ export const DISPLAY_NAME_MAX_LENGTH = 80;
  * Error messages are Turkish because they are shown to the user as-is.
  * Emails are compared case-insensitively everywhere (see the allowlist).
  */
-const email = z
-  .string()
-  .trim()
-  .min(1, "E-posta adresini yaz.")
-  .pipe(z.email("Geçerli bir e-posta adresi yaz."));
+const email = z.string().trim().min(1, "E-posta adresini yaz.").pipe(z.email("Geçerli bir e-posta adresi yaz."));
 
 export const signInInputSchema = z.object({
   email,

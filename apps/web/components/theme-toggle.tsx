@@ -20,11 +20,19 @@ export function ThemeToggle({ className, showLabels = false }: { className?: str
   const t = useTranslations("theme");
   const { theme, setTheme } = useTheme();
   // The stored theme is only known in the browser; render neutral on the server.
-  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
   const current = mounted ? (theme ?? "system") : undefined;
 
   return (
-    <div role="radiogroup" aria-label={t("label")} className={cn("inline-flex rounded-xl border-2 border-border p-1", className)}>
+    <div
+      role="radiogroup"
+      aria-label={t("label")}
+      className={cn("inline-flex rounded-xl border-2 border-border p-1", className)}
+    >
       {OPTIONS.map(({ value, icon: Icon, labelKey }) => {
         const selected = current === value;
         return (
@@ -38,7 +46,9 @@ export function ThemeToggle({ className, showLabels = false }: { className?: str
             onClick={() => setTheme(value)}
             className={cn(
               "inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2.5 font-semibold transition-colors focus-visible:ring-3 focus-visible:ring-ring",
-              selected ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+              selected
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             <Icon className="size-5" aria-hidden="true" />

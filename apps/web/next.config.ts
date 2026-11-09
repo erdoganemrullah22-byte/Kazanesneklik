@@ -19,15 +19,12 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Decision (K0): `next dev` must not auto-generate apps/web/AGENTS.md when
+  // run under an AI coding agent. Project rules live in README + docs/PLAN.md;
+  // version-matched Next.js docs are in node_modules/next/dist/docs/.
+  agentRules: false,
   // Workspace packages ship TypeScript sources.
-  transpilePackages: [
-    "@kazan/ai",
-    "@kazan/content",
-    "@kazan/contracts",
-    "@kazan/db",
-    "@kazan/engine",
-    "@kazan/safety",
-  ],
+  transpilePackages: ["@kazan/ai", "@kazan/content", "@kazan/contracts", "@kazan/db", "@kazan/engine", "@kazan/safety"],
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

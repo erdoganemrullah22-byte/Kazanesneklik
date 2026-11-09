@@ -13,7 +13,7 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["packages/*/src/**/*.test.ts", "apps/web/**/*.test.ts"],
+    include: ["packages/*/src/**/*.test.ts", "apps/web/**/*.test.ts", "test/**/*.test.ts"],
     exclude: ["**/node_modules/**", "**/.next/**", "apps/web/tests/e2e/**"],
     restoreMocks: true,
     unstubEnvs: true,

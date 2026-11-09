@@ -9,6 +9,14 @@
  */
 export type EmailAllowlist = ReadonlySet<string>;
 
+/**
+ * Faz K is single-user (plan 10 "Faz K farkları", risk 26): the list format is
+ * general, but env validation accepts at most this many addresses. Raising it
+ * is a code change (PR) on purpose: a second person may use the site only
+ * after the "herkese açma kapısı" (plan 11.0.4).
+ */
+export const FAZ_K_MAX_ALLOWED_EMAILS = 1;
+
 export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
 }

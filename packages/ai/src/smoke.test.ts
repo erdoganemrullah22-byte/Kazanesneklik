@@ -78,8 +78,15 @@ describe("runAiSmoke", () => {
     const { client } = mockClient(async () =>
       message({
         stop_reason: "refusal",
-        stop_details: { type: "refusal", category: null, explanation: null } as unknown as BetaMessage["stop_details"],
-        content: content as unknown as BetaMessage["content"],
+        stop_details: {
+          type: "refusal",
+          category: null,
+          explanation: null,
+          fallback_credit_token: null,
+          fallback_has_prefill_claim: null,
+          recommended_model: null,
+        },
+        content,
       }),
     );
     const result = await runAiSmoke(client, { model: "claude-opus-5-5", now: steppingClock() });

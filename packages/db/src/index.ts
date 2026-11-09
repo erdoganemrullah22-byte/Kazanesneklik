@@ -22,10 +22,7 @@ export interface CreatePrismaClientOptions {
   maxConnections?: number;
 }
 
-export function createPrismaClient({
-  connectionString,
-  maxConnections = 5,
-}: CreatePrismaClientOptions): PrismaClient {
+export function createPrismaClient({ connectionString, maxConnections = 5 }: CreatePrismaClientOptions): PrismaClient {
   const adapter = new PrismaPg({ connectionString, max: maxConnections });
   return new PrismaClient({ adapter });
 }

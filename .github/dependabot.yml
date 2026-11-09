@@ -1,0 +1,15 @@
+# Dependabot: proposes updates for the SHA-pinned GitHub Actions in
+# .github/workflows (it rewrites the SHA and the version comment together).
+# npm dependencies are pinned exactly and updated deliberately, by hand.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+    groups:
+      github-actions:
+        patterns: ["*"]

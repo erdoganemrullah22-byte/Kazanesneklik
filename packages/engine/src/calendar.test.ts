@@ -18,10 +18,7 @@ describe("isoWeekKey", () => {
     expect(isoWeek("2027-01-01")).toEqual({ year: 2026, week: 53 });
   });
 
-  it.each(["2026-02-30", "2026-13-01", "26-11-09", "2026-11-9", ""])(
-    "rejects invalid input %j",
-    (date) => {
-      expect(() => isoWeekKey(date)).toThrow(RangeError);
-    },
-  );
+  it.each(["2026-02-30", "2026-13-01", "26-11-09", "2026-11-9", ""])("rejects invalid input %j", (date) => {
+    expect(() => isoWeekKey(date)).toThrow(RangeError);
+  });
 });

@@ -49,12 +49,16 @@
     "toSignIn": "Giriş yap",
     "errors": {
       "notAllowed": "Bu e-posta adresiyle kayıt açık değil.",
+      "signUpClosed": "Kayıt şu anda kapalı.",
       "invalidCredentials": "E-posta ya da parola hatalı.",
       "userExists": "Bu e-posta ile zaten bir hesap var. Giriş yapmayı dene.",
       "passwordTooShort": "Parola en az 12 karakter olmalı.",
       "rateLimited": "Çok fazla deneme yaptın. Biraz bekleyip tekrar dene.",
+      "offline": "İnternet bağlantın yok gibi görünüyor. Bağlanınca tekrar dene.",
       "generic": "Bir sorun oluştu. Lütfen tekrar dene."
-    }
+    },
+    "signUpClosedTitle": "Kayıt şu anda kapalı",
+    "signUpClosedBody": "Site şimdilik yalnızca davetli hesaplara açık ve yeni kayıt alınmıyor. Hesabın varsa giriş yapabilirsin."
   },
   "comingSoon": {
     "badge": "Yakında",

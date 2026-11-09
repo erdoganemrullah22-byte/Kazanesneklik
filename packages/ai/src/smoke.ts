@@ -51,7 +51,10 @@ export interface RunSmokeOptions {
   now?: () => number;
 }
 
-export async function runAiSmoke(client: SmokeClient, { model, now = () => performance.now() }: RunSmokeOptions): Promise<SmokeResult> {
+export async function runAiSmoke(
+  client: SmokeClient,
+  { model, now = () => performance.now() }: RunSmokeOptions,
+): Promise<SmokeResult> {
   const startedAt = now();
   const elapsed = () => Math.max(0, Math.round(now() - startedAt));
 

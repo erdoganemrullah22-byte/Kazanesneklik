@@ -6,10 +6,7 @@ import { parse } from "yaml";
 
 import { type ExerciseLibraryResult, type RawExerciseEntry, validateExerciseLibrary } from "../library";
 
-export const DEFAULT_EXERCISES_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../../data/exercises",
-);
+export const DEFAULT_EXERCISES_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../data/exercises");
 
 /** Reads every `*.yaml` card in `dir` (non-recursive, sorted by name). */
 export async function readExerciseEntries(dir: string = DEFAULT_EXERCISES_DIR): Promise<RawExerciseEntry[]> {

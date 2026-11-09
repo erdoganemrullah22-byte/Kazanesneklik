@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  NO_UPDATE_NOTIFIER: "1"
+
+# Actions are pinned to full commit SHAs (supply chain); the comment names the
+# release. Dependabot (.github/dependabot.yml) proposes updates.
+jobs:
+  quality:
+    name: Lint, tip, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Build-time placeholders only (pages render per request; nothing connects).
+      # Obviously fake values; real secrets live only in Vercel (README → Dağıtım).
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      BETTER_AUTH_SECRET: ci-build-only-placeholder-not-a-secret-000000
+      BETTER_AUTH_URL: http://localhost:3000
+      AUTH_ALLOWED_EMAILS: ""
+      AI_LIVE: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # pnpm version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - name: Bağımlılıklar (lockfile değişmeden)
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Tip kontrolü
+        run: pnpm typecheck
+      - name: Biçim kontrolü
+        run: pnpm format:check
+      - name: Birim testleri
+        run: pnpm test
+      - name: İçerik doğrulama
+        run: pnpm content:validate
+      - name: Prisma şema doğrulama
+        run: pnpm db:validate
+      - name: Build
+        run: pnpm build
+      - name: İstemci paketinde sır taraması
+        run: |
+          pnpm secret-scan
+          # Belt and braces: plain grep over everything the browser downloads,
+          # including prerendered HTML / RSC / route bodies.
+          if grep -rIl -e "sk-ant" -e "ANTHROPIC_API_KEY" apps/web/.next/static apps/web/public/sw.js; then
+            echo "::error::İstemci paketinde sk-ant / ANTHROPIC_API_KEY bulundu"
+            exit 1
+          fi
+          # Only existing directories: with a missing one grep exits 2 even on a match.
+          prerendered=()
+          for dir in apps/web/.next/server/app apps/web/.next/server/pages apps/web/.next/server/route-cache; do
+            if [ -d "$dir" ]; then prerendered+=("$dir"); fi
+          done
+          if grep -rIl --include='*.html' --include='*.rsc' --include='*.body' -e "sk-ant" -e "ANTHROPIC_API_KEY" \
+            "${prerendered[@]}"; then
+            echo "::error::Önceden render edilmiş çıktıda sk-ant / ANTHROPIC_API_KEY bulundu"
+            exit 1
+          fi
+
+  e2e:
+    name: E2E (Playwright + Postgres)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: quality
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: kazan
+          POSTGRES_PASSWORD: kazan
+          POSTGRES_DB: kazan_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kazan -d kazan_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # The only E2E value that may come from outside; the rest (fake) is in
+      # apps/web/tests/e2e/e2e.env. Must name a "*_e2e" database (guarded).
+      E2E_DATABASE_URL: postgresql://kazan:kazan@localhost:5432/kazan_e2e
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Playwright tarayıcısı (yalnızca CI)
+        run: pnpm --filter @kazan/web exec playwright install --with-deps chromium
+      # scripts/e2e.sh: guard → migrate deploy → schema drift check
+      # (prisma migrate diff --exit-code against the migrated database) → build → Playwright.
+      - name: Migration + şema sapması + build + E2E
+        run: pnpm e2e
+      - name: Playwright raporu
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+          retention-days: 7

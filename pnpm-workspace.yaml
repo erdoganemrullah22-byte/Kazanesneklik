@@ -4,11 +4,16 @@ packages:
 
 # pnpm 10 runs no dependency lifecycle scripts unless they are listed here.
 onlyBuiltDependencies:
-  - '@prisma/engines'
+  - "@prisma/engines"
   - prisma
   - sharp
   - esbuild
   - unrs-resolver
 
 # Exact versions on `pnpm add` (pins instead of ^ ranges).
-savePrefix: ''
+savePrefix: ""
+
+# Reviewed and not needed: both ship prebuilt binaries via optional deps.
+ignoredBuiltDependencies:
+  - "@parcel/watcher"
+  - "@swc/core"

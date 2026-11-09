@@ -1,0 +1,14 @@
+node_modules
+.next
+.local
+coverage
+playwright-report
+test-results
+pnpm-lock.yaml
+docs/PLAN.md
+packages/db/src/generated
+packages/db/prisma/migrations
+apps/web/public/sw.js
+apps/web/public/sw.js.map
+apps/web/next-env.d.ts
+*.tsbuildinfo

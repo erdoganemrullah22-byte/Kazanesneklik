@@ -30,15 +30,7 @@ export const REGIONS = [
 export const regionSchema = z.enum(REGIONS);
 export type Region = z.infer<typeof regionSchema>;
 
-export const exerciseTypeSchema = z.enum([
-  "static",
-  "dynamic",
-  "active",
-  "pnf",
-  "strength_rom",
-  "loaded",
-  "breathing",
-]);
+export const exerciseTypeSchema = z.enum(["static", "dynamic", "active", "pnf", "strength_rom", "loaded", "breathing"]);
 
 export const positionSchema = z.enum([
   "standing",
@@ -55,9 +47,7 @@ export const spaceSchema = z.enum(["standing_only", "floor_mat", "floor_wide"]);
 
 export const evidenceSchema = z.enum(["strong", "moderate", "weak", "expert"]);
 
-const slugSchema = z
-  .string()
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug must be kebab-case (a-z, 0-9, -)");
+const slugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug must be kebab-case (a-z, 0-9, -)");
 
 /** Capability id (plan 4.2), e.g. `soft_knee_surface`, `vertical_support`. */
 const capabilitySchema = z.string().regex(/^[a-z]+(?:_[a-z]+)*$/, "capability must be snake_case");
@@ -76,9 +66,7 @@ const feelSchema = z.number().int().min(0).max(10);
 const shortText = z.string().trim().min(1);
 
 /** Turkish is required; English is optional until the `en` locale ships. */
-export const localizedTextSchema = z
-  .object({ tr: shortText, en: shortText.optional() })
-  .strict();
+export const localizedTextSchema = z.object({ tr: shortText, en: shortText.optional() }).strict();
 
 const localizedListSchema = (opts: { min: number; max: number; maxChars?: number }) => {
   const item = opts.maxChars ? shortText.max(opts.maxChars) : shortText;

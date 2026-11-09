@@ -21,11 +21,7 @@ function parseLocalDate(localDate: string): { year: number; month: number; day: 
   const month = Number(match[2]);
   const day = Number(match[3]);
   const probe = new Date(Date.UTC(year, month - 1, day));
-  if (
-    probe.getUTCFullYear() !== year ||
-    probe.getUTCMonth() !== month - 1 ||
-    probe.getUTCDate() !== day
-  ) {
+  if (probe.getUTCFullYear() !== year || probe.getUTCMonth() !== month - 1 || probe.getUTCDate() !== day) {
     throw new RangeError(`not a calendar date: "${localDate}"`);
   }
   return { year, month, day };

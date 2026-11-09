@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && serwist build",
-    "build:vercel": "pnpm --filter @kazan/db migrate:deploy && next build && serwist build",
+    "build:vercel": "bash scripts/vercel-build.sh",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit -p tsconfig.json && tsc --noEmit -p sw/tsconfig.json",
     "e2e": "playwright test",

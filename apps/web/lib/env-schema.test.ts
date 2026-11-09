@@ -15,6 +15,7 @@ describe("createServerEnv", () => {
     expect(env.AUTH_ALLOWED_EMAILS).toEqual(["sahip@example.com"]);
     expect(env.AI_MODEL_MAIN).toBe("claude-opus-5-5");
     expect(env.AI_LIVE).toBe(false);
+    expect(env.AUTH_SIGNUP_OPEN).toBe(false);
     expect(env.ANTHROPIC_API_KEY).toBeUndefined();
   });
 
@@ -27,7 +28,20 @@ describe("createServerEnv", () => {
 
   it('parses AI_LIVE strictly ("true" / "false")', () => {
     expect(createServerEnv({ ...valid, AI_LIVE: "true" }).AI_LIVE).toBe(true);
+    expect(createServerEnv({ ...valid, AI_LIVE: "false" }).AI_LIVE).toBe(false);
     expect(() => createServerEnv({ ...valid, AI_LIVE: "yes" })).toThrow(/AI_LIVE/);
+  });
+
+  it('keeps sign-up closed unless AUTH_SIGNUP_OPEN is exactly "true"', () => {
+    expect(createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "" }).AUTH_SIGNUP_OPEN).toBe(false);
+    expect(createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "false" }).AUTH_SIGNUP_OPEN).toBe(false);
+    expect(createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "true" }).AUTH_SIGNUP_OPEN).toBe(true);
+    expect(() => createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "1" })).toThrow(/AUTH_SIGNUP_OPEN/);
+  });
+
+  it("has no switch to skip validation (raw strings would bypass the transforms)", () => {
+    // @ts-expect-error -- createServerEnv takes no options on purpose.
+    expect(() => createServerEnv({ ...valid, AI_LIVE: "yes" }, { skipValidation: true })).toThrow(/AI_LIVE/);
   });
 
   it.each<[keyof ServerEnvSource, string | undefined]>([
@@ -35,7 +49,9 @@ describe("createServerEnv", () => {
     ["DATABASE_URL", "mysql://x@y/z"],
     ["BETTER_AUTH_SECRET", "too-short"],
     ["BETTER_AUTH_URL", "not a url"],
-    ["AUTH_ALLOWED_EMAILS", "sahip@example.com,yanlis-adres"],
+    ["AUTH_ALLOWED_EMAILS", "yanlis-adres"],
+    // Faz K: a second address needs a code change (plan 11.0.4, risk 26).
+    ["AUTH_ALLOWED_EMAILS", "sahip@example.com,arkadas@example.com"],
     ["ANTHROPIC_API_KEY", "not-an-anthropic-key"],
   ])("rejects an invalid %s", (key, value) => {
     expect(() => createServerEnv({ ...valid, [key]: value })).toThrow(new RegExp(key));

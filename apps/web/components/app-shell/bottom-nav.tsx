@@ -16,6 +16,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label={t("label")}
+      data-testid="alt-menu"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-nav/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
       <ul className="mx-auto grid max-w-lg grid-cols-5">
