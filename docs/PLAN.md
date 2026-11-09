@@ -529,7 +529,9 @@ Hız çarpanı   v = Y × U × max(R, A) × G
 Ön tahmin (PRIOR):
   cm basamağı:     alt = Σ segment_cm ÷ (K_üst ÷ ufuk × v)      üst = Σ segment_cm ÷ (K_alt ÷ ufuk × v) × W
                    segmentler seviye sınırlarında bölünür; her segment kendi seviyesinin K satırını kullanır (3.4.2)
-  kademe basamağı: alt / üst = basamak başına prior (4–10 hafta, 5.7) ya da aşağıdaki tablo ÷ v; üst ayrıca × W
+  kademe basamağı (ve K satırı olmayan cm basamağı, ör. T01s):
+                   tur = ⌈gereken bölge-seviye adımı ÷ odak bölge sayısı (selectFocus, 1–3)⌉
+                   alt / üst = tur × basamak başına prior (4–10 hafta, 5.7) ÷ v; üst ayrıca × W
 Sınırlar:     alt ≥ 4 hafta · üst ≥ 1,5 × alt (aralık daraltılıp tek tarihe yaklaştırılmaz)
               üst > 104 hafta → "2 yıldan uzun olabilir" (sayı gösterilmez)
 Yuvarlama:    alt aşağı, üst yukarı; ≤26 hafta hafta olarak, >26 hafta ay olarak gösterilir
@@ -575,7 +577,7 @@ KSG ≥2 **ve** 1. ya da 2. madde varsa `RegionLevel.boneLimitSuspected = true` 
 | Uzun ufuk hedefi | Ölçüt (başlangıç seviyesi) | S1 | S2 | S3 | S4 | S5 | S6 | Kaynak | Faz |
 |---|---|---|---|---|---|---|---|---|---|
 | Öne uzanma M4 (+10 cm) | T01 | 50–120 | 38–86 | 26–54 | 12–24 | Hedefte | Hedefte | K tablosundan türetildi (seviye ortası başlangıç) [Uzman/Kalibre] | MVP |
-| Genel mobilite M4 (ölçülen tüm bölgeler ≥S3) | En düşük bölge | 20–52 | 10–26 | Hedefte | Hedefte | Hedefte | Hedefte | Basamak başına prior [Uzman/Kalibre] | MVP |
+| Genel mobilite M4 (ölçülen tüm bölgeler ≥S3) | 6 bölge aynı seviyede, 3 odak | 16–40 | 8–20 | Hedefte | Hedefte | Hedefte | Hedefte | Tur formülü (4–10 hafta/tur); 1 odakta ×3 [Uzman/Kalibre] | MVP |
 | Ön split M7 (yerde, kalça kare) | T11 | — | — | 50–134 | 38–100 | 22–60 | 8–20 | T11 K satırından türetildi [Uzman/Kalibre] | Faz 2 |
 | Yan split M7 (yerde ya da tek blok) | T10 → T12 | — | — | 60–156 | 40–120 | 20–60 | 8–24 | [Uzman/Kalibre]; kemiksel sınır sık [Orta] | Faz 3 |
 | Pancake M6 (göğüs yerde) | T01 ve T10'un düşüğü | — | — | 52–156 | 36–104 | 16–52 | 8–20 | [Uzman/Kalibre] | Faz 3 |
@@ -614,7 +616,7 @@ KSG ≥2 **ve** 1. ya da 2. madde varsa `RegionLevel.boneLimitSuspected = true` 
 - **AI ile ilişki:** HST'yi yalnızca A2 açıklar; HST sayıları A2'ye yapılandırılmış alan olarak verilir ve L5 süre beyaz listesine girer; AI'ın kendi ürettiği süre engellenir (8.5). HST sayıları pazarlamada kullanılmaz (iddia sicili, 9.16).
 - **Ücretsizdir:** HST deterministiktir ve Esneklik Profili'nin parçasıdır (12.5 temel ilke); AI anlatımı A2 kotasına tabidir.
 
-**Faz kapsamı:** MVP'de HST iki MVP parkurunun uzun ufku (öne uzanma M1–M4, genel mobilite M1–M4) ve kilometre taşları için çalışır; G1–G14 MVP'den itibaren toplanır. Split, köprü ya da pancake seçen MVP kullanıcısı hedef girişi formunu doldurur, bekleme listesine alınır ve genel programın sıradaki basamağını görür. Beceri parkurlarının HST'si parkurla birlikte açılır: ön split Faz 2; yan split, pancake, köprü Faz 3.
+**Faz kapsamı:** MVP'de HST iki MVP parkurunun (genel mobilite, masa başı ve 50+ varyantları dahil; öne uzanma) kilometre taşları ve uzun ufku için çalışır; G1–G14 MVP'den itibaren toplanır. Split, köprü ya da pancake seçen MVP kullanıcısı hedef girişi formunu doldurur, bekleme listesine alınır ve genel programın sıradaki basamağını görür. Beceri parkurlarının HST'si parkurla birlikte açılır: ön split Faz 2; yan split, pancake, köprü Faz 3.
 
 ---
 
@@ -1339,7 +1341,7 @@ Yukarıdan aşağıya:
 3. **Kısa not:** MVP'de veriden üretilen deterministik şablon ("Bu hafta arka bacağa 18 dakika ayırdın"); Faz 2'de premium için AI notu (önbellekli, günde en fazla 1).
 4. **Sıradaki ölçüm:** "Kontrol testine 9 gün".
 5. **Mini ilerleme:** odak bölgede yön göstergesi ve son ölçüm.
-6. **Kilometre taşı çubuğu:** "Öne uzanma: 2/4 basamak · sıradaki: tahmini 12–24 hafta (Ön tahmin)" (HST, 3.5).
+6. **Kilometre taşı çubuğu:** "Öne uzanma: 2/4 basamak · sıradaki: tahmini 10–20 hafta (Ön tahmin)" (HST, 3.5).
 
 | Durum | Bugün kartı ne der? |
 |---|---|
@@ -1652,7 +1654,7 @@ yetenekler: extend_reach, seat, vertical_support   zaman: Pzt/Çar/Cum × 15 dk 
 destek: koç=harici partner=bazen
 uyum_4h: %82   program: Dönem 1 / Döngü 2 / Hafta 3
 geçmiş: R=1,0 A=1,0 G=1,0 W=1,0   kemiksel_sınır: yok      (yalnızca çarpan ve bayrak; G2 ve serbest metin yok)
-hst: GENEL_MOBILITE sıradaki=M2 5–13h ON_TAHMIN · uzun=M4 25–65h ON_TAHMIN   (motor çıktısı; A2 yalnızca bunları anabilir)
+hst: GENEL_MOBILITE sıradaki=M2 10–25h ON_TAHMIN · uzun=M4 40–100h ON_TAHMIN   (motor çıktısı; A2 yalnızca bunları anabilir)
 </profil_ozeti>
 ```
 
@@ -2039,7 +2041,7 @@ Ağrı ve koruma modundaki günler seriyi bozmaz. Bağlı insan koç varsa ve `p
 | **3 — planlı hekim değerlendirmesi** | İlerleyen uyuşma ya da güçsüzlük · gece ağrısı ile açıklanamayan kilo kaybı · dinlenmeyle geçmeyen ≥7 ağrı · eklemde "yerinden çıkma" hissi · kızarık, sıcak, şiş eklem | Bölge kilitlenir, hekim önerisi; diğer bölgelerle program sürer |
 
 - Her belirti için Türkçe eşanlamlılar, diakritiksiz yazımlar, yaygın yazım hataları ve çekimli biçimler listelenir (L0 sözlüğü); liste hekim onayıyla sürümlenir ve arayüz şablonlarına bağlanır.
-- Belirtinin bildirilebileceği her yer (tarama, ağrı kartı, seans sonu, sohbet, check-in) aynı listeyi kullanır.
+- Belirtinin bildirilebileceği her yer (tarama, "Diğer" cevapları ve notlar, ağrı kartı, seans sonu, sohbet, check-in) aynı listeyi kullanır.
 - Gebeliğe özgü tarama ve durdurma belirtilerinde CSEP gebelik anketinin mantığı referans alınabilir; uyarlama ve lisans koşulları kontrol edilecek.
 - Kriz ya da kendine zarar verme ifadesinde: şefkatli sabit metin, "yalnız değilsin", acilde 112; antrenmana dönmekte ısrar edilmez.
 
@@ -2093,7 +2095,7 @@ Ağrı ve koruma modundaki günler seriyi bozmaz. Bağlı insan koç varsa ve `p
 | Partner / yardımcı | 18+ beyanı (partner güvenlik kartında) |
 | Takım şablonları | Yalnızca yetişkin gruplar |
 | Paylaşılan hesap | Kullanım koşullarında yasak |
-| Paylaşılan cihaz | Çıkışta IndexedDB'deki sağlık verisi ve seans kayıtları silinir (senkron edilmemiş kayıt varsa uyarı); "Bu cihazı başkası da kullanıyor" seçeneği hesap öncesi verileri oturum sonunda siler |
+| Paylaşılan cihaz | Çıkışta IndexedDB'deki sağlık verisi, serbest metin cevapları ve seans kayıtları silinir (senkron edilmemiş kayıt varsa uyarı); "Bu cihazı başkası da kullanıyor" seçeneği hesap öncesi verileri oturum sonunda siler |
 
 ### 9.10 Olumsuz olay yönetimi ve içerik geri çekme
 
@@ -2228,7 +2230,7 @@ Değişmeyen kurallar: anahtar yalnızca sunucu ortam değişkeninde durur; **so
 │  Hızlı yol: packages/engine + packages/safety İSTEMCİDE çalışır (hesap öncesi)    │
 │        │                                     ├─ IndexedDB (Dexie): seans paketi,  │
 │        │                                     │   oynatıcı durumu, outbox,         │
-│        │                                     │   hesap öncesi tarama              │
+│        │                                     │   hesap öncesi tarama ve metin     │
 │        │                                     └─ Service Worker (Serwist):         │
 │        │                                         kabuk + medya + ses önbelleği    │
 │  AI ekranları (A2/A3; Faz 2'de SSE sohbet) ─┐            │                        │
@@ -2719,7 +2721,7 @@ Eski sürümler pasif kalır (`active=false`), silinmez; eski programlar kendi `
 - **Oynatıcı durum makinesi** (`useReducer` ya da XState): `hazır → geri sayım → tutma → dinlenme → (taraf değiştir) → sonraki → bitiş`; her geçişte durum IndexedDB'ye yazılır (sayfa yenilense ya da çökse kaldığı yerden devam).
 - **Outbox ve senkron:** Her kayıt istemcide UUIDv7 `clientId` ile oluşur, önce outbox'a yazılır (iyimser arayüz). Tetikleyiciler: `online`, `visibilitychange`, Chromium'da Background Sync, 60 sn zamanlayıcı; üstel geri çekilme (1 sn → 5 dk). Sunucu `clientId` ile upsert eder (`duplicate` döner); kayıtlar yalnızca eklendiği için çakışma olmaz. `clientCreatedAt` ±7 gün penceresinde kabul edilir. Yanıttaki `programRevision` yeniyse paket yenilenir.
 - **Güvenlik ağdan bağımsızdır:** Ağrı Politikası, kırmızı bayrak ve kişisel tavan istemcide de çalışır; çevrimdışıyken de seans durdurulur ve doğru ekran gösterilir. Seans başında çevrimiçiyse iptal listesi kontrol edilir; süresi dolmuş pakette yalnızca sabit güvenli seans açılır.
-- **Hesap öncesi veri:** Tarama ve ilk seans kayıtları yalnızca IndexedDB'de; hesap ve rıza sonrası senkronize edilir; rıza yoksa cihazda kalır.
+- **Hesap öncesi veri:** Tarama, serbest metin cevapları ("Diğer", notlar) ve ilk seans kayıtları yalnızca IndexedDB'de; L0 burada çalışır; hesap ve rıza sonrası senkronize edilir; rıza yoksa cihazda kalır.
 - **Diğer:** Yeni sürüm **asla seans sırasında** zorla yüklenmez ("Yeni sürüm hazır" seans sonunda); tarayıcıdan kalıcı depolama izni istenir; iOS'ta kurulum istemi olmadığı için ilk seanstan sonra rehberli "Paylaş → Ana Ekrana Ekle" sayfası; AI, senkron ve kütüphane keşfi çevrimiçi gerektirir (zarif mesajla).
 
 ### 10.9 Klasör yapısı
@@ -2834,7 +2836,7 @@ Bu bölüm sırlarla ilgili **tek kaynaktır**; 0.3 (#8), 8.10, 9.18 ve S19 bura
 
 **A. Anthropic Console (ürün sahibi, bir kez):**
 1. Proje için ayrı workspace'ler aç: `kazan-esneklik-prod`, `kazan-esneklik-preview`, `kazan-esneklik-eval` (yerelde gerçek AI denenecekse `kazan-esneklik-dev`).
-2. Her workspace'e **aylık harcama limiti** koy ve uyarı bildirimlerini aç. Başlangıç önerisi [Kalibre]: prod kapalı betada $100 (12.3'teki ≈ $57'lik beta tahmininin yaklaşık 2 katı), preview $10, eval $200 (12.2), dev $10. Console limiti uygulamanın kendi bütçesinden (8.9) bağımsız son savunmadır; dolarsa API hata döner ve site AI'sız moda geçer (8.6).
+2. Her workspace'e **aylık harcama limiti** koy ve uyarı bildirimlerini aç. Başlangıç önerisi [Kalibre]: prod kapalı betada $100 (12.3'teki beta AI tahmini: onboarding ≈ $15 + kullanım ≈ $42 ≈ $57; yaklaşık 2 katı), preview $10, eval $200 (12.2), dev $10. Console limiti uygulamanın kendi bütçesinden (8.9) bağımsız son savunmadır; dolarsa API hata döner ve site AI'sız moda geçer (8.6).
 3. Her workspace'te **bu projeye özel** bir anahtar oluştur; adı ortamı ve tarihi söylesin (ör. `kazan-esneklik-prod-2026-11`). Anahtar başka projelerle paylaşılmaz.
 4. Anahtar yalnızca oluşturulduğu anda görünür: doğrudan 5. ya da 9. adımdaki yere (gerekirse parola yöneticisine) yapıştır; not defterine, e-postaya, sohbete yazma.
 
