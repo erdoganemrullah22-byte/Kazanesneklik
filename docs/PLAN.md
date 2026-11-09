@@ -1,11 +1,11 @@
 # Kazan Esneklik — Ürün ve Teknik Plan
 
-> **Sürüm:** v1.1 (birleşik plan + kullanıcı istekleri: kişisel geçmiş ve Hedef Süre Tahmini, her soruda "Diğer" ve AI cevap analizi, API anahtarı rehberi; değişiklik kaydı Ek A.2) · **Tarih:** 2026-11-09 · **Durum:** Kod yazılmadan önceki tek ve kanonik plan.
+> **Sürüm:** v1.2 (v1.1 + ürün sahibinin kararı: ilk aşama **Faz K — yalnızca ürün sahibinin kişisel kullanımı**, klinik kurul ve hukuki işler herkese açmadan önceki kapıya taşındı, 11.0; v1.1: kişisel geçmiş ve Hedef Süre Tahmini, her soruda "Diğer" ve AI cevap analizi, API anahtarı rehberi; değişiklik kaydı Ek A.2) · **Tarih:** 2026-11-09 · **Durum:** Kod yazılmadan önceki tek ve kanonik plan.
 > Bu belge dört uzman taslağını (esneklik bilimi ve müfredat, ürün ve devamlılık, teknik mimari, yapay zeka katmanı) ve iki eleştiri raporunu (güvenlik, başarı) tek bir karara bağlar. Taslaklar arasında çelişki olan her konuda **bu belge geçerlidir**. Verilen kararların listesi Ek A'dadır.
 >
-> **Kanıt etiketleri:** **[Güçlü]** birden çok kontrollü çalışma ya da meta-analiz aynı yönü gösteriyor · **[Orta]** destekleyen çalışmalar var ama sonuçlar karışık ya da etki küçük-orta · **[Zayıf]** veri sınırlı ya da çelişkili · **[Uzman]** uygulamacıların ortak görüşü, doğrudan kanıt yok · **[Kalibre]** başlangıç değeri; pilot verisi ve klinik kurul onayıyla güncellenecek. Belgede kaynak atfı yoktur, yalnızca kanıt düzeyi verilir.
+> **Kanıt etiketleri:** **[Güçlü]** birden çok kontrollü çalışma ya da meta-analiz aynı yönü gösteriyor · **[Orta]** destekleyen çalışmalar var ama sonuçlar karışık ya da etki küçük-orta · **[Zayıf]** veri sınırlı ya da çelişkili · **[Uzman]** uygulamacıların ortak görüşü, doğrudan kanıt yok · **[Kalibre]** başlangıç değeri; pilot verisi ve klinik kurul onayıyla güncellenecek (Faz K'da ürün sahibi bu değerleri kendi deneyimine göre ayarlayabilir, 11.0.1). Belgede kaynak atfı yoktur, yalnızca kanıt düzeyi verilir.
 >
-> **Not:** Müfredat taslağının bir kısmı (seviye tanımları, test protokolleri, hacim tavanları, plato algoritması, takvim kuralları, kırmızı bayrak listesi) bu birleştirmeye eksik ulaştı. Bu bölümler bu belgede yeniden yazıldı ve klinik kurul onayına tabidir.
+> **Not:** Müfredat taslağının bir kısmı (seviye tanımları, test protokolleri, hacim tavanları, plato algoritması, takvim kuralları, kırmızı bayrak listesi) bu birleştirmeye eksik ulaştı. Bu bölümler bu belgede yeniden yazıldı ve herkese açmadan önce klinik kurul onayına tabidir (Faz K'da başlangıç değeri olarak kullanılır, 11.0).
 >
 > **Kullanım amacı (sabit):** Kazan Esneklik, **sağlıklı yetişkinler için bir esneklik ve mobilite antrenman aracıdır.** Teşhis koymaz, tedavi etmez, ağrı azaltmayı hedeflemez ve sağlık profesyonelinin yerini almaz. Ürünün her ekranı, metni ve AI çıktısı bu cümleyle tutarlı olmak zorundadır (ayrıntı: 9.1).
 
@@ -13,14 +13,16 @@
 
 | Okuyucu | Önce okuyacağı bölümler |
 |---|---|
-| Ürün sahibi (karar verecek kişi) | 0, 11, 12, 14, Ek A |
-| Fizyoterapist / esneklik antrenörü (klinik kurul) | 3, 5, 9.1–9.10 |
-| Geliştirici | 10, 8, 9.11–9.18, 11 |
+| Ürün sahibi (karar verecek kişi) | 0, 11.0 (Faz K), 11, 12, 14, Ek A |
+| Fizyoterapist / esneklik antrenörü (klinik kurul; herkese açma kapısında) | 3, 5, 9.1–9.10, 11.0.4 |
+| Geliştirici | 11.0 (Faz K), 10, 8, 9.11–9.18, 11 |
 | Tasarımcı / içerik editörü | 1, 2, 6, 7 |
 
 ---
 
 ## 0. Yönetici Özeti
+
+> **v1.2 — Faz K (ürün sahibinin kararı):** İlk aşamada siteyi **yalnızca ürün sahibi** kullanır: yetişkin, kendi bedeni üzerinde, kendi sorumluluğunda. Klinik kurul onayı, KVKK hukuki işleri, rıza akışları, kotalar ve ödeme bu aşamada yoktur; hepsi **başka bir kişi siteyi kullanmadan önce** zorunlu olan **herkese açma kapısına** (11.0.4) taşındı. Mimari, `packages/safety` (Ağrı Politikası v1, kırmızı bayraklar, L0, "AĞRI VAR"), tarama, testler, kişisel geçmiş, kural motoru, HST, oynatıcı, devamlılık çekirdeği ve AI kuralları (L0–L7, değişmez 13) aynen kalır; herkese açarken yeniden yazım gerekmez. AI'da A1–A4 açıktır (A4 sohbet dahil). **Sıra: Faz K (K0–K5) → herkese açma kapısı → kapalı beta (Faz 1b) → genel lansman.** Faz K'nın aylık maliyeti: altyapı ≈ $0, AI tipik ≈ $27 (12.0). Ayrıntı 11.0; değişiklik kaydı Ek A.2. Aşağıdaki özet, aksi yazılmadıkça herkese açılan ürünü tanımlar.
 
 ### 0.1 Vizyon
 
@@ -75,8 +77,8 @@ Vaadin tek adı **"Düzenli Çalışana Söz"**dür. Bu bir **süreç taahhüdü
 | 6 | **Söz yalnızca kişinin kendisinin ölçebildiği cm testleriyle verilir** (MVP: oturarak uzanma, diz–duvar). Resim seçimi yalnızca seviye yerleştirir. Ölçüm güvenirliği pilotla (ICC, SEM, MDC95) doğrulanmadan sayılı söz yok. | Evde, tek başına, havluyla çalışan kullanıcıda derece ölçümü mümkün değil. |
 | 7 | **Yığın:** Next.js (App Router) + TypeScript strict + pnpm monorepo + PostgreSQL + **Prisma** + Better Auth + Serwist/Dexie (PWA). Barındırma Vercel `fra1` + Neon (Frankfurt); sağlayıcılar KVKK standart sözleşmesini imzalamazsa **B planı Türkiye'de barındırma**. | Olgun ekosistem, tip güvenliği, okunabilir şema, hızlı başlangıç. |
 | 8 | **Claude yalnızca sunucuda:** `@anthropic-ai/sdk`, `import "server-only"`, varsayılan model **`claude-opus-5-5`**. `ANTHROPIC_API_KEY` yalnızca `.env.local` ve barındırma ortam değişkeninde durur; sohbete yapıştırılmaz, depoya yazılmaz (adım adım rehber: 10.14). Daha ucuz model kullanmak kullanıcının kararıdır (14. bölüm). | Anahtar güvenliği ve kalite. |
-| 9 | **MVP = çekirdek döngü:** 2 hedef parkuru, 6 bölge × S1–S4, ~42 egzersiz, 8 testlik MVP bataryası (T01–T09; söz testleri T01 ve T03), çevrimdışı oynatıcı, minimum seans, haftalık seri, geri dönüş akışı, Ağrı Politikası ve 3 AI özelliği. İleri seviye (ön split S4–S6), AI koç sohbeti ve ödeme Faz 2'de; koç paneli ve partner germeleri Faz 3'te. | Tek geliştirici ve yarı zamanlı uzmanla gerçekçi kapsam; kritik yol içerik üretimi. |
-| 10 | **Önce yönetişim, sonra kullanıcı:** Kapalı betadan **önce** klinik güvenlik kurulu (hekim + fizyoterapist) eşikleri ve içerikleri imzalar; KVKK avukatı aydınlatma, rıza ve aktarım düzenini onaylar; kullanım amacı için düzenleyici görüş alınır. | Gerçek sağlık verisi ilk beta kullanıcısıyla birlikte işlenmeye başlar. |
+| 9 | **Sıra (v1.2): Faz K → herkese açma kapısı → kapalı beta.** Faz K (11.0) bu çekirdeğin tek kullanıcılık sürümüdür (+ A4 sohbet, sahibinin seçtiği 1 ileri parkur; kota, rıza ekranı, ödeme yok). Kapıdan sonra kapalı betaya giden **MVP = çekirdek döngü:** 2 hedef parkuru, 6 bölge × S1–S4, ~42 egzersiz, 8 testlik MVP bataryası (T01–T09; söz testleri T01 ve T03), çevrimdışı oynatıcı, minimum seans, haftalık seri, geri dönüş akışı, Ağrı Politikası ve 3 AI özelliği. İleri seviye (ön split S4–S6), AI koç sohbeti ve ödeme Faz 2'de; koç paneli ve partner germeleri Faz 3'te. | Tek geliştirici ve yarı zamanlı uzmanla gerçekçi kapsam; kritik yol içerik üretimi. |
+| 10 | **Önce yönetişim, sonra (başka) kullanıcı:** Ürün sahibinden başka bir kişi siteyi kullanmadan **önce** (herkese açma kapısı, 11.0.4) klinik güvenlik kurulu (hekim + fizyoterapist) eşikleri ve içerikleri imzalar; KVKK avukatı aydınlatma, rıza ve aktarım düzenini onaylar; kullanım amacı için düzenleyici görüş alınır. Faz K'da kurul yoktur; [Uzman]/[Kalibre] değerler başlangıç değeridir. | Başka kişilerin sağlık verisi ilk beta kullanıcısıyla birlikte işlenmeye başlar; Faz K'da işlenen tek veri ürün sahibinin kendi verisidir. |
 
 **v1.1 eklemeleri (kullanıcı isteği; kayıt Ek A.2):**
 - **Kişisel geçmiş ve gerçekçi süre:** Spor ve esneklik geçmişi, eski yaralanmalar, kemiksel sınır göstergeleri ve hedef beklentisi sorulur; hızlı yol uzamaz (profil tamamlama ve kısa hedef girişi formu). Kural motoru tek tarih değil **aralık** hesaplar: ilk 4–6 hafta ön tahmin, sonra kişinin kendi ölçülen hızı; AI yalnızca açıklar ve kendi süre vaadini üretemez (3.5).
