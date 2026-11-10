@@ -8,6 +8,7 @@ import { nextCookies } from "better-auth/next-js";
 
 import { isEmailAllowed } from "@/lib/allowlist";
 import { env } from "@/lib/env";
+import { requestOrigin } from "@/lib/request-origin";
 import { type SignUpRejection, signUpRejection } from "@/lib/signup-policy";
 
 import { prisma } from "./db";
@@ -53,7 +54,15 @@ export const auth = betterAuth({
   appName: "Kazan Esneklik",
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
-  trustedOrigins: [new URL(env.BETTER_AUTH_URL).origin],
+  trustedOrigins: (request) => {
+    const origins = [new URL(env.BETTER_AUTH_URL).origin];
+    // Cloud-session preview only (AUTH_TRUST_REQUEST_HOST, see lib/request-origin.ts).
+    if (env.AUTH_TRUST_REQUEST_HOST && request) {
+      const own = requestOrigin(request.headers);
+      if (own) origins.push(own);
+    }
+    return origins;
+  },
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   emailAndPassword: {
     enabled: true,

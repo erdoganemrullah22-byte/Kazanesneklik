@@ -13,6 +13,7 @@ export const env = createServerEnv({
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
   AUTH_ALLOWED_EMAILS: process.env.AUTH_ALLOWED_EMAILS,
   AUTH_SIGNUP_OPEN: process.env.AUTH_SIGNUP_OPEN,
+  AUTH_TRUST_REQUEST_HOST: process.env.AUTH_TRUST_REQUEST_HOST,
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   AI_MODEL_MAIN: process.env.AI_MODEL_MAIN,
   AI_LIVE: process.env.AI_LIVE,

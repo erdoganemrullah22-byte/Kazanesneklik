@@ -36,6 +36,14 @@ export const serverEnvShape = {
     ),
   /** Sign-up window (Faz K): closed unless explicitly "true". */
   AUTH_SIGNUP_OPEN: booleanFlag,
+  /**
+   * Cloud-session preview (Faz K): also trust the request's own origin
+   * (X-Forwarded-Proto/Host, else Host) for Better Auth's origin check, so the
+   * app works behind a forwarding preview whose public URL is not known in
+   * advance. Still a same-origin check: a cross-site request's Origin never
+   * equals the host it is sent to. Off unless explicitly "true".
+   */
+  AUTH_TRUST_REQUEST_HOST: booleanFlag,
   ANTHROPIC_API_KEY: z.string().startsWith("sk-ant-", "Anthropic anahtarı sk-ant- ile başlar").optional(),
   AI_MODEL_MAIN: z.string().trim().min(1).default("claude-opus-5-5"),
   AI_LIVE: booleanFlag,
@@ -59,6 +67,7 @@ export function createServerEnv(source: ServerEnvSource) {
       BETTER_AUTH_URL: source.BETTER_AUTH_URL,
       AUTH_ALLOWED_EMAILS: source.AUTH_ALLOWED_EMAILS,
       AUTH_SIGNUP_OPEN: source.AUTH_SIGNUP_OPEN,
+      AUTH_TRUST_REQUEST_HOST: source.AUTH_TRUST_REQUEST_HOST,
       ANTHROPIC_API_KEY: source.ANTHROPIC_API_KEY,
       AI_MODEL_MAIN: source.AI_MODEL_MAIN,
       AI_LIVE: source.AI_LIVE,

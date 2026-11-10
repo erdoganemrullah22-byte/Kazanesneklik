@@ -32,6 +32,12 @@ describe("createServerEnv", () => {
     expect(() => createServerEnv({ ...valid, AI_LIVE: "yes" })).toThrow(/AI_LIVE/);
   });
 
+  it('trusts the request host only when AUTH_TRUST_REQUEST_HOST is exactly "true"', () => {
+    expect(createServerEnv({ ...valid }).AUTH_TRUST_REQUEST_HOST).toBe(false);
+    expect(createServerEnv({ ...valid, AUTH_TRUST_REQUEST_HOST: "true" }).AUTH_TRUST_REQUEST_HOST).toBe(true);
+    expect(() => createServerEnv({ ...valid, AUTH_TRUST_REQUEST_HOST: "yes" })).toThrow(/AUTH_TRUST_REQUEST_HOST/);
+  });
+
   it('keeps sign-up closed unless AUTH_SIGNUP_OPEN is exactly "true"', () => {
     expect(createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "" }).AUTH_SIGNUP_OPEN).toBe(false);
     expect(createServerEnv({ ...valid, AUTH_SIGNUP_OPEN: "false" }).AUTH_SIGNUP_OPEN).toBe(false);
